@@ -1,5 +1,4 @@
-return(
-    <div>
+
         <!DOCTYPE html>
 <html lang="zxx">
   <head>
@@ -221,5 +220,3 @@ return(
     <script src="js/custom.js"></script>
   </body>
 </html>
-</div>
-)
