@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS notice_board ( -- 고객센터
 );
 
 
-insert into product (auction_id, product_id, email, auction_price, picture, product_status, createAt) value (?,?,"ktsk@lg.com",38000,?,"상",?)
+insert into product (auction_id, product_id, email, auction_price, picture, product_status, createAt) values (?,?,"ktsk@lg.com",38000,?,"상",?)
 
 -- AUTO_INCREMENT나 defaul가 datetime인 경우에는 insert할 때 자동으로 받아오는건가...?
 -- 그러면 DAO 파일에서도 auction_id나, product_id, createAt은 안 적어도 되는건지
