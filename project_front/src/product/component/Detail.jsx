@@ -1,3 +1,4 @@
+//여기 페이지에서 입찰하기 클릭하면 bidding
 import {Link, useNavigate, useParams } from "react-router-dom"
 import axios from "axios"
 import React, {useCallback, useState, useEffect} from "react"
