@@ -2,6 +2,18 @@
 import {Link, useNavigate, useParams } from "react-router-dom"
 import axios from "axios"
 import React, {useCallback, useState, useEffect} from "react"
+// import Detail = ({DetailData})=>{
+//     return(
+//         <div>
+//         {/* 상품 세부 정보 표시 부분 */}
+//         <h2>Product Detail</h2>
+//         {/* 기존 상품 세부 정보 표시 내용 */}
+        
+//         {/* 추가된 내용을 위한 테이블 */}
+//         <ProductTable productData={productDetailData.additionalData} />
+//       </div>
+//     )
+// }
 
 const Detail = () => {
     const navigate = useNavigate()
@@ -19,8 +31,9 @@ const Detail = () => {
         cnt:"",
         createAt: "",
     })
+
 const getDetail = async () => {
-    const resp =await axios.get("http://localhost:8000/products/detail/" + id);
+    const resp =await axios.get("http://localhost:8000/products/detail/" + product_id);
     setProduct(resp.data.data)
 }
 useEffect(()=>{

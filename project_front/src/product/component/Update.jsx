@@ -13,7 +13,8 @@ const Update = () => {
   });
 
   const changeData = (e) => {
-    setProduct({ ...product, [e.target.product_id]: e.target.value });
+    setProduct({ ...product, [e.target.name]: e.target.value });
+    //[e.target.name] 변경된 input요소 이름
   };
 
   const getData = async () => {
@@ -25,8 +26,9 @@ const Update = () => {
   }, []);
 
   const detailUpdate = async (e) => {
-    await axios.post("http://localhost:8000/products/update/" + product);
-    navigate("product/detail/:product_id");
+    await axios.post("http://localhost:8000/products/update/" + product_id, {product});
+    //서버에서 json 형식으로 데이터를 받기를..
+    navigate("product/detail/" + product_id);
   };
   return(
     //html
