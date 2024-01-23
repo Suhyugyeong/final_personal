@@ -27,13 +27,17 @@ const Update = () => {
     getData();
   }, []);
 
-  // const detailUpdate = async (e) => {
-  //   await axios.post("http://localhost:8000/products/update/" + product_id, {
-  //     product,
-  //   });
-  //   //서버에서 json 형식으로 데이터를 받기를..
-  //   navigate("product/detail/" + product_id);
-  // };
-  // return <div></div>;
+  const detailUpdate = async (e) => {
+    await axios.post("http://localhost:8000/products/update/" + product_id, {
+      product,
+    });
+    //서버에서 json 형식으로 데이터를 받기를..
+    navigate("product/detail/" + product_id);
+  };
+  return (
+    <div>
+      {/* 구매자 입장에서의 수정페이지니까 구매자가 작성한 페이지내에서 작성해야함 */}
+    </div>
+  );
 };
 export default Update;

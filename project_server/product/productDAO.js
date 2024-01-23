@@ -85,32 +85,4 @@ const productDAO = {
   },
 };
 
-//multer
-// DAO 파일 (예: productDAO.js)
-const db = require("./db"); // 실제 DB 연결 코드
-
-function insertProduct(title, email, picturePath /* ...other fields */) {
-  const sql =
-    "INSERT INTO product (title, email, picture, /* ...other fields */, createAt) VALUES (?, ?, ?, /* ...other values */, NOW())";
-
-  return new Promise((resolve, reject) => {
-    db.query(
-      sql,
-      [title, email, picturePath /* ...other values */],
-      (err, result) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(result);
-        }
-      }
-    );
-  });
-}
-
-module.exports = {
-  insertProduct,
-  // ... other functions
-};
-
 module.exports = productDAO;

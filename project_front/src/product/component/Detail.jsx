@@ -2,6 +2,7 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import React, { useCallback, useState, useEffect } from "react";
+import Table from "./Table";
 // import Detail = ({DetailData})=>{
 //     return(
 //         <div>
@@ -110,7 +111,8 @@ const Detail = () => {
                 <span>입찰 현황을 확인하세요.</span>
               </div>
             </div>
-            <table className="table table-hover">
+            <div>{Table}</div>
+            {/* <table className="table table-hover">
               <thead>
                 <tr>
                   <th scope="col">#</th>
@@ -119,8 +121,8 @@ const Detail = () => {
                   <th scope="col">상품상태</th>
                 </tr>
               </thead>
-              <tbody>{/* 여기가 입찰 테이블 */}</tbody>
-            </table>
+              <tbody>입찰테이블</tbody>
+            </table> */}
             <div className="d-grid gap-2 d-md-flex justify-content-md-end">
               <button className="btn btn-warning" type="button">
                 수정
