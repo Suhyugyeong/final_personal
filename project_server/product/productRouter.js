@@ -32,7 +32,7 @@ router.get("/biddingTable", function (req, res, next) {
   productDAO.biddingTable((resp) => {
     res.json(resp);
   });
-}); //성공
+});
 
 router.post("/update", function (req, res, next) {
   console.log("게시글 수정하기");

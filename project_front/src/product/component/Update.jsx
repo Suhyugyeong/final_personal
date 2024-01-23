@@ -31,7 +31,7 @@ const Update = () => {
     navigate("product/detail/" + product_id);
   };
   return(
-    //html
+
   )
 };
 export default Update;
