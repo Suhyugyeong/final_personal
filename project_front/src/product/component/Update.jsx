@@ -34,10 +34,6 @@ const Update = () => {
     //서버에서 json 형식으로 데이터를 받기를..
     navigate("product/detail/" + product_id);
   };
-  return (
-    <div>
-      {/* 구매자 입장에서의 수정페이지니까 구매자가 작성한 페이지내에서 작성해야함 */}
-    </div>
-  );
+  return <h1>테스트</h1>;
 };
 export default Update;

@@ -55,7 +55,6 @@ const Bidding = () => {
     <div className="container-fluid py-5">
       <div className="container py-5">
         <form action="#">
-          {/* 여기가 폼 태그!!!!!!!!!!!!!!!!!!1 */}
           <div className="row g-5">
             <div className="col-md-12 col-lg-6 col-xl-7">
               <div className="row">
@@ -168,7 +167,6 @@ const Bidding = () => {
                           <img
                             src="img/vegetable-item-2.jpg"
                             className="img-fluid rounded-circle"
-                            // style="width: 90px; height: 90px"
                             alt=""
                           />
                         </div>
@@ -196,8 +194,6 @@ const Bidding = () => {
                   </tbody>
                 </table>
               </div>
-
-              {/* 여기 div 하나 추가한거 */}
               <div className="row g-4 text-center align-items-center justify-content-center border-bottom py-3">
                 <div className="col-12">
                   <div className="form-check text-start my-3">
