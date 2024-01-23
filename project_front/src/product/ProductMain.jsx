@@ -6,7 +6,7 @@ import Update from "./component/Update";
 const ProductMain = () => {
   return (
     <div>
-      <h2>제품 메인 페이지</h2>
+      <h2>제품 페이지</h2>
       <Routes>
         <Route path="/detail/:id" element={<Detail />} />
         <Route path="/bidding" element={<Bidding />} />
