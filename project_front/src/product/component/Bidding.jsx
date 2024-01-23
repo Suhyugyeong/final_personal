@@ -51,38 +51,31 @@ const Bidding = () => {
 return(
     <div className="container-fluid py-5">
       <div className="container py-5">
-        <form action="#"/>
+        <form action="#"> 여기가 폼 태그!!!!!!!!!!!!!!!!!!1
           <div className="row g-5">
             <div className="col-md-12 col-lg-6 col-xl-7">
-              <div className="row">
+              <div className="row"> !!!!!!!!!!!!!!
                 <div className="col-md-12 col-lg-6">
                   <div className="form-item w-100">
-                    <label className="form-label my-3"
-                      >제목, 저자, ISBN<sup>*</sup></label
-                    >            <div className="input-group mb-3">
+                    <label className="form-label my-3">제목, 저자, ISBN<sup>*</sup></label>            
+                      <div className="input-group mb-3">
                       <input type="text" className="form-control" placeholder="제목, 저자, ISBN" aria-label="Recipient's username" aria-describedby="button-addon2"/>
                       <button className="btn btn-outline-secondary" type="button" id="button-addon2">검색</button>
-                    </div>
-         
-                    
+                      </div>
+                   </div>
                   </div>
-                </div>
-                <div className="col-md-12 col-lg-6">
-                    
+				  <div className="col-md-12 col-lg-6">
                   <div className="form-item w-100">
-                
                   </div>
                 </div>
               </div>
               <div className="form-item">
-                <label className="form-label my-3">입찰가(원)<sup>*</sup></label>
-                
+                <label className="form-label my-3">입찰가(원)<sup>*</sup></label>     
 <div className="input-group">
   <input type="text" className="form-control" aria-label="Dollar amount (with dot and two decimal places)"/>
   <span className="input-group-text">₩</span>
   <span className="input-group-text">WON</span>
 </div>
-
               </div>
               <div className="form-item">
                 <label className="form-label my-3">품질등급 <sup>*</sup></label>
@@ -92,8 +85,6 @@ return(
                   <option value="2">중</option>
                   <option value="3">하</option>
                 </select>
-                
-             
               </div>
               <div className="form-item">
                 <label className="form-label my-3">사진첨부<sup>*</sup></label>
@@ -101,13 +92,9 @@ return(
                   <input className="form-control" type="file" id="formFileMultiple" multiple/>
                   <label for="formFileMultiple" className="form-label"></label>
                 </div>
-         
               </div>
-
               <div className="form-item">
-                <label className="form-label my-3"
-                  >상세내용(선택사항)<sup></sup></label
-                >
+                <label className="form-label my-3">상세내용(선택사항)<sup></sup></label>
                 <div className="form-item">
                   <textarea
                     name="text"
@@ -118,11 +105,9 @@ return(
                     placeholder="제품 상세 내용"
                   ></textarea>
                 </div>
-               
               </div>
               <div className="form-check my-3">
-              </div>
-            </div>
+              </div> 
             <div className="col-md-12 col-lg-6 col-xl-5">
               <div className="table-responsive">
                 <table className="table">
@@ -152,16 +137,6 @@ return(
                       <td className="py-5">2</td>
                       <td className="py-5">$138.00</td>
                     </tr>
-
-    
-                    </tr>
-                    <tr>
-                      
-                
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
                       <th scope="row"></th>
                       <td className="py-5">
                         <p className="mb-0 text-dark text-uppercase py-3">최종입찰가</p>
@@ -173,28 +148,23 @@ return(
                           <p className="mb-0 text-dark">$135.00</p>
                         </div>
                       </td>
-                    </tr>
                   </tbody>
                 </table>
+
               </div>
-              <div
-                className="row g-4 text-center align-items-center justify-content-center border-bottom py-3"
-              >
+              </div> 
+              {/* 여기 div 하나 추가한거 */}
+              <div className="row g-4 text-center align-items-center justify-content-center border-bottom py-3">
                 <div className="col-12">
-                    
                   <div className="form-check text-start my-3">
                     <input
-                    
                       type="checkbox"
                       className="form-check-input"
-
                       id="Transfer-1"
                       name="Transfer"
                       value="Transfer"
                     />
-                    <label className="form-check-label" for="Transfer-1" 
-                      >최종 입찰하시겠습니까?</label
-                    >
+                    <label className="form-check-label" for="Transfer-1">최종 입찰하시겠습니까?</label>
                   </div>
                   <p className="text-start text-dark">
                     Make your payment directly into our bank account. Please use
@@ -211,30 +181,19 @@ return(
                     be shipped until the funds have cleared in our account.
                   </p>
                 </div>
-
-
                 </div>
-              </div>
-              </div>
               <div className="d-grid gap-2 col-6 mx-auto">
                 <button className="btn btn-secondary" type="button">취소하기</button>
                 <button className="btn btn-info" type="button">입찰하기</button>
               </div>
+			  </div>
             </div>
-            
+        </form> 
           </div>
-          
-        </form>
-        
       </div>
-      
     </div>
-    <a
-      href="#"
-      className="btn btn-primary border-3 border-primary rounded-circle back-to-top"
-      ><i className="fa fa-arrow-up"></i
-    ></a>
-);
+    <a href="#" className="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i className="fa fa-arrow-up"></i></a>
+	);
 };
 
 export default Bidding;
