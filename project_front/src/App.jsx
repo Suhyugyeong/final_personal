@@ -7,7 +7,7 @@ const App = () => {
       {/* header랑 footer 아직 없으니까 
       /products/*로 해야할지? /product/*로 해야할지? */}
       <Routes>
-        <Route path="/product/*" element={<ProductMain />} />
+        <Route path="/products/*" element={<ProductMain />} />
       </Routes>
     </div>
   );

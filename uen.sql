@@ -74,11 +74,13 @@ CREATE TABLE IF NOT EXISTS notice_board ( -- 고객센터
 );
 
 
-insert into product (auction_id, product_id, email, auction_price, picture, product_status, createAt) values (?,?,"ktsk@lg.com",38000,?,"상",?)
+
+INSERT INTO product (product_id, title, email, picture, master_price, auction_id, endtime, auction_status, isbn, content, cnt, createAt) 
+VALUES (?, '콜레라시대의사랑', 'g@g.com', '', 28000, 1, NOW() + INTERVAL 60 MINUTE, '1', '135245682', '삽니다', ?, NOW());
 
 -- AUTO_INCREMENT나 defaul가 datetime인 경우에는 insert할 때 자동으로 받아오는건가...?
 -- 그러면 DAO 파일에서도 auction_id나, product_id, createAt은 안 적어도 되는건지
 --picture의 경우 어떻게 받아올건지... multer를 이용하라고 하셨는데... 책259페이지 참고
 -- product_stutus의 경우 select - option으로 선택하는데 이걸 그냥 string으로 받아올 수 있는지, 아니면 숫자값을 주는게 나은지...
 
-insert into auction (email, auction_price, product_status) values (sk@lg.com, 40000, "상")
+insert into auction (email, product_id, auction_price, product_status) values ("sk@lg.com", 40000, "상")

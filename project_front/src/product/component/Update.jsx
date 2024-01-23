@@ -18,20 +18,22 @@ const Update = () => {
   };
 
   const getData = async () => {
-    const resp = await axios.get("http://localhost:8000/products/detail/" + product_id);
+    const resp = await axios.get(
+      "http://localhost:8000/products/detail/" + product_id
+    );
     setProduct(resp.data.data);
   };
   useEffect(() => {
     getData();
   }, []);
 
-  const detailUpdate = async (e) => {
-    await axios.post("http://localhost:8000/products/update/" + product_id, {product});
-    //서버에서 json 형식으로 데이터를 받기를..
-    navigate("product/detail/" + product_id);
-  };
-  return(
-
-  )
+  // const detailUpdate = async (e) => {
+  //   await axios.post("http://localhost:8000/products/update/" + product_id, {
+  //     product,
+  //   });
+  //   //서버에서 json 형식으로 데이터를 받기를..
+  //   navigate("product/detail/" + product_id);
+  // };
+  // return <div></div>;
 };
 export default Update;
