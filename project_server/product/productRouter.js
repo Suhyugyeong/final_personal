@@ -35,6 +35,7 @@ router.get("/biddingTable", function (req, res, next) {
     res.json(resp);
   });
 });
+//라우터 수정해야할 것 같음...
 
 router.post("/update", function (req, res, next) {
   console.log("게시글 수정하기");
@@ -48,7 +49,7 @@ router.post("/update", function (req, res, next) {
 const upload = multer({
   storage: multer.diskStorage({
     destination(req, file, done) {
-      done(null, "uploads/");
+      done(null, "uploads/"); //파일은 uploads에 저장될거
     },
     filename(req, file, done) {
       const ext = path.extname(file.originalname);

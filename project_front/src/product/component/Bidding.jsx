@@ -109,7 +109,7 @@ const Bidding = () => {
                   className="form-select"
                   aria-label="Default select example"
                 >
-                  <option selected>품질을 선택해주세요.</option>
+                  <option>품질을 선택해주세요.</option>
                   <option value="1">상</option>
                   <option value="2">중</option>
                   <option value="3">하</option>
@@ -126,7 +126,10 @@ const Bidding = () => {
                     id="formFileMultiple"
                     multiple
                   />
-                  <label for="formFileMultiple" className="form-label"></label>
+                  <label
+                    htmlFor="formFileMultiple"
+                    className="form-label"
+                  ></label>
                 </div>
               </div>
               <div className="form-item">
@@ -137,7 +140,7 @@ const Bidding = () => {
                   <textarea
                     name="text"
                     className="form-control"
-                    spellcheck="false"
+                    spellCheck="false"
                     cols="30"
                     rows="11"
                     placeholder="제품 상세 내용"
@@ -165,7 +168,7 @@ const Bidding = () => {
                           <img
                             src="img/vegetable-item-2.jpg"
                             className="img-fluid rounded-circle"
-                            style="width: 90px; height: 90px"
+                            // style="width: 90px; height: 90px"
                             alt=""
                           />
                         </div>
@@ -205,7 +208,7 @@ const Bidding = () => {
                       name="Transfer"
                       value="Transfer"
                     />
-                    <label className="form-check-label" for="Transfer-1">
+                    <label className="form-check-label" htmlFor="Transfer-1">
                       최종 입찰하시겠습니까?
                     </label>
                   </div>
