@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const productDAO = require("./productDAO");
+const multer = require("multer");
 
 // router.get("/productList", function (req, res, next) {
 //   console.log("상품 메인 불러오기");
@@ -40,6 +41,24 @@ router.post("/update", function (req, res, next) {
   productDAO.update(data, (resp) => {
     res.json(resp);
   });
+});
+
+//multer
+const upload = multer({
+  storage: multer.diskStorage({
+    destination(req, file, done) {
+      done(null, "/uploads");
+    },
+    filename(req, file, done) {
+      const ext = path.extname(file.originalname);
+      done(null, path.basename(file.originalname, ext) + Date.now() + ext);
+    },
+  }),
+  limit: { fileSize: 5 * 1024 * 1024 },
+});
+app.post("/uploads", upload.single("image"), (req, res) => {
+  console.log("사진 업로드하기");
+  res.sen("ok");
 });
 
 // router.get("/", function (req, res) {

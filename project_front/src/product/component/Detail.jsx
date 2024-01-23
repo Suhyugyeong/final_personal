@@ -50,7 +50,7 @@ const Detail = () => {
               <div className="product_slider_img">
                 <div id="vertical">
                   <div data-thumb="img/product/single-product/book_img.jpg">
-                    <img src="img/product/single-product/book_img.jpg" />
+                    <img src="img/product/single-product/product_1.png" />
                   </div>
                   <div data-thumb="img/product/single-product/product_1.png">
                     <img src="img/product/single-product/product_1.png" />
