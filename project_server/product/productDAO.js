@@ -8,10 +8,7 @@ const sql = {
   bidding:
     "insert into product (auction_id, product_id, email, auction_price, picture, product_status, createAt) values (?,?,?,?,?,?,?)", //create
   biddingTable:
-    "insert into auction (email, auction_price, product_status) values (?, ?, ?)",
-  // create 입찰보드에서 입력한 내용이 상세페이지 내부에 있는 테이블에 들어가게끔 하려면... 일단 update가 아니라 insert??
-  // biddingTable:
-  //   "update auction set email =?, auction_price =?, product_status =? ", //update
+    "insert into auction (email, auction_price, product_status) values (?, ?, ?)", // update가 아니라 create
 };
 
 const productDAO = {
@@ -24,6 +21,23 @@ const productDAO = {
       callback({ status: 200, message: "ok", data: resp });
     } catch (error) {
       return { status: 500, message: "디테일 불러들이기 실패", error: error };
+    } finally {
+      if (conn !== null) conn.release();
+    }
+  },
+
+  update: async (item, callback) => {
+    let conn = null;
+    try {
+      conn = await getPool().getConnection();
+      const [resp] = await conn.query(sql.update, [
+        item.master_price,
+        item.content,
+        item.product_id,
+      ]);
+      callback({ status: 200, message: "ok" });
+    } catch (error) {
+      return { status: 500, message: "게시글 수정 실패", error: error };
     } finally {
       if (conn !== null) conn.release();
     }
@@ -63,23 +77,6 @@ const productDAO = {
       callback({ status: 200, message: "ok", data: resp });
     } catch (error) {
       return { status: 500, message: "입찰 테이블 조회 실패", error: error };
-    } finally {
-      if (conn !== null) conn.release();
-    }
-  },
-
-  update: async (item, callback) => {
-    let conn = null;
-    try {
-      conn = await getPool().getConnection();
-      const [resp] = await conn.query(sql.update, [
-        item.master_price,
-        item.content,
-        item.product_id,
-      ]);
-      callback({ status: 200, message: "ok" });
-    } catch (error) {
-      return { status: 500, message: "게시글 수정 실패", error: error };
     } finally {
       if (conn !== null) conn.release();
     }
