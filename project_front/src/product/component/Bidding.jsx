@@ -35,22 +35,6 @@ const Bidding = () => {
     [navigate, product]
   );
 
-  //  // 추가된 내용을 포함한 productDetailData를 생성
-  //  const productDetailData = {
-  //     // 기존 상품 세부 정보
-  //     // ...
-  //     // 추가된 내용
-  //     additionalData: {/* 추가된 내용 데이터 */}
-  //   };
-
-  //   return (
-  //     <div>
-  //       {/* ProductDetail 컴포넌트에 추가된 내용 전달 */}
-  //       <ProductDetail productDetailData={productDetailData} />
-  //     </div>
-  //   );
-  // };
-
   return (
     <div className="container-fluid py-5">
       <div className="container py-5">
@@ -58,7 +42,6 @@ const Bidding = () => {
           <div className="row g-5">
             <div className="col-md-12 col-lg-6 col-xl-7">
               <div className="row">
-                {" "}
                 <div className="col-md-12 col-lg-6">
                   <div className="form-item w-100">
                     <label className="form-label my-3">
@@ -71,11 +54,14 @@ const Bidding = () => {
                         placeholder="제목, 저자, ISBN"
                         aria-label="Recipient's username"
                         aria-describedby="button-addon2"
+                        onClick={changeData}
+                        // 여기서 api 가져오는게 필요해서...
                       />
                       <button
                         className="btn btn-outline-secondary"
                         type="button"
                         id="button-addon2"
+                        onClick={changeData}
                       >
                         검색
                       </button>
@@ -95,6 +81,7 @@ const Bidding = () => {
                     type="text"
                     className="form-control"
                     aria-label="Dollar amount (with dot and two decimal places)"
+                    onChange={changeData}
                   />
                   <span className="input-group-text">₩</span>
                   <span className="input-group-text">WON</span>
@@ -107,6 +94,7 @@ const Bidding = () => {
                 <select
                   className="form-select"
                   aria-label="Default select example"
+                  onChange={changeData}
                 >
                   <option>품질을 선택해주세요.</option>
                   <option value="1">상</option>
@@ -118,12 +106,14 @@ const Bidding = () => {
                 <label className="form-label my-3">
                   사진첨부<sup>*</sup>
                 </label>
+                {/* 이 부분에 사진 등록 버튼이 필요하려나? */}
                 <div className="mb-3">
                   <input
                     className="form-control"
                     type="file"
                     id="formFileMultiple"
                     multiple
+                    onChange={changeData}
                   />
                   <label
                     htmlFor="formFileMultiple"
@@ -143,6 +133,7 @@ const Bidding = () => {
                     cols="30"
                     rows="11"
                     placeholder="제품 상세 내용"
+                    onChange={changeData}
                   ></textarea>
                 </div>
               </div>
@@ -175,6 +166,7 @@ const Bidding = () => {
                       <td className="py-5">$69.00</td>
                       <td className="py-5">2</td>
                       <td className="py-5">$138.00</td>
+                      {/* 이쪽 td는 전부 책 검색하고 나서 선택한 결과가 들어갔으면 좋겠음..되려나? */}
                     </tr>
                     <tr>
                       <th scope="row"></th>
@@ -188,6 +180,7 @@ const Bidding = () => {
                       <td className="py-5">
                         <div className="py-3 border-bottom border-top">
                           <p className="mb-0 text-dark">$135.00</p>
+                          {/* 여기도 최종 입찰가를 작성하면 그 값이 여기로 들어갔으면 좋겠음 */}
                         </div>
                       </td>
                     </tr>
@@ -203,6 +196,7 @@ const Bidding = () => {
                       id="Transfer-1"
                       name="Transfer"
                       value="Transfer"
+                      required
                     />
                     <label className="form-check-label" htmlFor="Transfer-1">
                       최종 입찰하시겠습니까?
@@ -225,10 +219,19 @@ const Bidding = () => {
                 </div>
               </div>
               <div className="d-grid gap-2 col-6 mx-auto">
-                <button className="btn btn-secondary" type="button">
+                <button
+                  className="btn btn-secondary"
+                  type="button"
+                  onClick={() => navigate("/detail/${product.product_id")}
+                >
+                  {/* 원래 보고 있던 detail 페이지로 돌아가려면 product_id로 해도 되나 숫자로 받는데 string을 해줘야됨?*/}
                   취소하기
                 </button>
-                <button className="btn btn-info" type="button">
+                <button
+                  className="btn btn-info"
+                  type="button"
+                  onClick={insertBidding}
+                >
                   입찰하기
                 </button>
               </div>
