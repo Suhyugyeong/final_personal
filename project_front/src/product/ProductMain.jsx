@@ -2,6 +2,8 @@ import { Route, Routes } from "react-router-dom";
 import Detail from "./component/Detail";
 import Bidding from "./component/Bidding";
 import Update from "./component/Update";
+import Table from "./component/Table";
+//테이블이 detail 내부에 들어간다고 하면 Main에서 라우터 설정을 어떻게 해야하는지?
 
 const ProductMain = () => {
   return (

@@ -78,7 +78,5 @@ CREATE TABLE IF NOT EXISTS notice_board ( -- 고객센터
 INSERT INTO product (product_id, title, email, picture, master_price, auction_id, endtime, auction_status, isbn, content, cnt, createAt) 
 VALUES (?, '콜레라시대의사랑', 'g@g.com', '1645123456789', 28000, 1, NOW(), '1', '135245682', '삽니다', ?, NOW());
 
--- product_stutus의 경우 select - option으로 선택하는데 이걸 그냥 string으로 받아올 수 있는지, 아니면 숫자값을 주는게 나은지... 현재는 알파벳
-
 INSERT INTO auction (auction_id, product_id, email, auction_price, product_status, createAt) 
 VALUES (?, ?, "kaka@kiki.koko", 80000, '', 'a', now())
