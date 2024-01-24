@@ -6,7 +6,7 @@ const sql = {
   update:
     "update product set master_price =?, content = ? where product_id = ?", //update
   bidding:
-    "insert into product (auction_id, product_id, email, auction_price, picture, product_status, createAt) values (?,?,?,?,?,?,?)", //create
+    "insert into product (title, author, isbn, auction_price, picture, product_status, createAt) values (?,?,?,?,?,?,?)", //create
   biddingTable:
     "insert into auction (email, auction_price, product_status) values (?, ?, ?)", // update가 아니라 create
 };
@@ -48,17 +48,18 @@ const productDAO = {
     try {
       conn = await getPool().getConnection();
       const [resp] = await conn.query(sql.bidding, [
-        item.auction_id,
-        item.product_id,
-        item.email,
+        item.title,
+        item.author,
+        item.isbn,
         item.auction_price,
         item.picture,
         item.product_status,
         item.createAt,
       ]);
+      console.log("입찰등록1", resp);
       callback({ status: 200, message: "ok", data: resp });
     } catch (error) {
-      return { status: 500, message: "입찰 실패", error: error };
+      return { status: 500, message: "입찰 등록 실패", error: error };
     } finally {
       if (conn !== null) conn.release();
     }

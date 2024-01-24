@@ -8,11 +8,11 @@ import Table from "./Table";
 const Bidding = () => {
   const navigate = useNavigate();
   const [product, setProduct] = useState({
-    auction_id: "",
-    product_id: "",
-    email: "",
+    title: "",
+    author: "",
+    isbn: "",
     auction_price: "",
-    picture: "",
+    picture: "", //여기의 사진을..
     product_status: "",
     createAt: "",
   });
@@ -30,16 +30,58 @@ const Bidding = () => {
   //bidding 페이지는 글을 쓰는거긴 한데, insert랑은 조금 다른 느낌 아닌가?
   //bidding으로 product가 추가되면 list가 업데이틑되는거니까 맞나??
 
-  const insertBidding = useCallback(
-    async (e) => {
-      e.preventDefault();
-      await axios.post("http://localhost:8000/products/bidding", product);
-      //bidding 글을 올렸으면 원래 디테일 페이지로.. product를 상태를 요청의 본문으로 포함?
-      navigate("/detail/${product.product_id}");
-      //product 객체 안에 있는 product_id를 사용해서 경매등록된 제품 id를 가져와야함
-    },
-    [navigate, product]
-  );
+  const insertBidding = async (e) => {
+    e.preventDefault();
+    if (file) {
+      const formData = new FormData();
+      formData.append("file1", file);
+      formData.append("title", title);
+
+      try {
+        const response = await axios.post(
+          "http://localhost:8000/products/upload", // 이미지 업로드를 처리하는 서버 엔드포인트
+          formData
+        );
+
+        if (response.data.status === 200) {
+          // 서버에서 받은 이미지 경로 또는 식별자를 product 상태에 저장
+          setProduct({ ...product, picture: response.data.data });
+          setUploadImage(response.data.data);
+        } else {
+          console.error("이미지 업로드 실패");
+        }
+      } catch (error) {
+        console.error("에러발생", error);
+      }
+    } else {
+      alert("데이터를 입력하지 않았습니다.");
+    }
+
+    const biddingData = {
+      title: product.title,
+      author: product.author,
+      isbn: product.isbn,
+      auction_price: product.auction_price,
+      picture: product.picture,
+      product_status: product.product_status,
+      createAt: product.createAt,
+    };
+
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/products/bidding",
+        biddingData
+      );
+      //저장 성공하면
+      if (response.data.status === 200) {
+        navigate(`/detail/${response.data.data.product_id}`);
+      } else {
+        console.error("입찰 내용 저장 실패");
+      }
+    } catch (error) {
+      console.error("에러발생", error);
+    }
+  };
 
   const upload = async (e) => {
     e.preventDefault();
@@ -49,7 +91,8 @@ const Bidding = () => {
       formData.append("file1", file);
       formData.append("title", title);
       const resp = await axios.post(
-        "http://localhost:8000/test2/upload",
+        "http://localhost:8000/products/bidding",
+        // 여기를 어떻게 수정?
         formData
       );
       if (resp.data.status === 200) {
@@ -149,7 +192,12 @@ const Bidding = () => {
                       name="file1"
                       onChange={(e) => setFile(e.target.files[0])}
                     />
-                    <input type="button" value="업로드" onClick={upload} />
+                    <input
+                      type="button"
+                      value="업로드"
+                      onClick={upload}
+                      onClick={insertBidding}
+                    />
                     {/* <input
                       name="file1"
                       // 여기 추가
@@ -165,6 +213,12 @@ const Bidding = () => {
                   </div>
                 </div>
               </form>
+              <br />
+              {uploadImage ? (
+                <img src={`http://localhost:8000/upload/${uploadImage}`} />
+              ) : (
+                ""
+              )}
               <div className="form-item">
                 <label className="form-label my-3">
                   상세내용(선택사항)<sup></sup>
@@ -208,6 +262,13 @@ const Bidding = () => {
                       </td>
                       <td className="py-5">
                         Awesome Brocoli(여기 사진이 들어가면 좋겠음)
+                        {/* {uploadImage ? (
+                          <img
+                            src={`http://localhost:8000/upload/${uploadImage}`}
+                          />
+                        ) : (
+                          ""
+                        )} */}
                       </td>
                       <td className="py-5">$69.00</td>
                       <td className="py-5">2</td>
@@ -268,7 +329,7 @@ const Bidding = () => {
                 <button
                   className="btn btn-secondary"
                   type="button"
-                  onClick={() => navigate("/detail/${product.product_id")}
+                  onClick={() => navigate(`/detail/${product.product_id}`)} //백택사용
                 >
                   {/* 원래 보고 있던 detail 페이지로 돌아가려면 product_id로 해도 되나 숫자로 받는데 string을 해줘야됨?*/}
                   취소하기

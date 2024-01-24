@@ -84,13 +84,13 @@ const Detail = () => {
                 <p></p>
                 <h3>{product.endtime}</h3>
                 <br />
-                <a
-                  href="#"
+                <button
                   className="btn_3"
-                  onClick={() => navigate("products/bidding")}
+                  onClick={() => navigate("/products/bidding")}
                 >
                   판매입찰하기
-                </a>
+                  {/* 슬래시 없으면 상대경로라서 http://localhost:5173/products/detail/1/products/bidding 여기로 감.. */}
+                </button>
                 <h2>{product.master_price}</h2>
               </div>
             </div>

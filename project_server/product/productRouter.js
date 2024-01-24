@@ -60,7 +60,7 @@ router.post("/bidding", (req, res, next) => {
   productDAO.bidding(data, (resp) => {
     res.json(resp);
   });
-});
+}); //이거는 찍히는데... 자료가.....
 
 router.post("/update", function (req, res, next) {
   console.log("게시글 수정하기");
