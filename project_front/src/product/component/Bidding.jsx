@@ -16,6 +16,9 @@ const Bidding = () => {
     product_status: "",
     createAt: "",
   });
+  const [title, setTitle] = useState("");
+  const [file, setFile] = useState();
+  const [uploadImage, setUploadImage] = useState();
 
   const changeData = useCallback(
     (e) => {
@@ -38,6 +41,25 @@ const Bidding = () => {
     [navigate, product]
   );
 
+  const upload = async (e) => {
+    e.preventDefault();
+    console.log(title, file);
+    if (file) {
+      const formData = new FormData();
+      formData.append("file1", file);
+      formData.append("title", title);
+      const resp = await axios.post(
+        "http://localhost:8000/test2/upload",
+        formData
+      );
+      if (resp.data.status === 200) {
+        alert("upload ok");
+        setUploadImage(resp.data.data);
+      }
+    } else {
+      alert("데이터를 입력하지 않았습니다.");
+    }
+  };
   return (
     <div className="container-fluid py-5">
       <div className="container py-5">
@@ -107,7 +129,7 @@ const Bidding = () => {
               </div>
               <form
                 id="form"
-                action="/upload"
+                action="#"
                 method="post"
                 encType="multipart/form-data"
               >
@@ -117,6 +139,18 @@ const Bidding = () => {
                   </label>
                   <div className="mb-3">
                     <input
+                      type="text"
+                      name="title"
+                      value={title}
+                      onChange={(e) => setTitle(e.target.value)}
+                    />
+                    <input
+                      type="file"
+                      name="file1"
+                      onChange={(e) => setFile(e.target.files[0])}
+                    />
+                    <input type="button" value="업로드" onClick={upload} />
+                    {/* <input
                       name="file1"
                       // 여기 추가
                       type="file"
@@ -127,11 +161,7 @@ const Bidding = () => {
                     <label
                       htmlFor="formFileMultiple"
                       className="form-label"
-                    ></label>
-                    {/* <button type="submit" className="btn btn-outline-secondary">
-                      사진업로드
-                    </button> */}
-                    {/* 여기 action을 넣어야겠지..? */}
+                    ></label> */}
                   </div>
                 </div>
               </form>
@@ -176,7 +206,9 @@ const Bidding = () => {
                           />
                         </div>
                       </td>
-                      <td className="py-5">Awesome Brocoli</td>
+                      <td className="py-5">
+                        Awesome Brocoli(여기 사진이 들어가면 좋겠음)
+                      </td>
                       <td className="py-5">$69.00</td>
                       <td className="py-5">2</td>
                       <td className="py-5">$138.00</td>
@@ -247,6 +279,7 @@ const Bidding = () => {
                   onClick={insertBidding}
                 >
                   입찰하기
+                  {/* 여기가 안 먹음요 */}
                 </button>
               </div>
             </div>

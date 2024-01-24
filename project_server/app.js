@@ -4,8 +4,8 @@ const path = require("path");
 const morgan = require("morgan");
 const cors = require("cors");
 const nunjucks = require("nunjucks");
-const cookieParser = require("cookie-parser"); //추가
-const session = require("express-session"); //추가
+const cookieParser = require("cookie-parser"); //추가 npm 다운 받아야함
+const session = require("express-session"); //추가 npm 다운 받아야함
 
 // 프로젝트 루트에 .env 파일을 이용하겠다. .env를 다른폴더에서 사용하려면 config(매개변수)에 지정
 require("dotenv").config();
