@@ -109,11 +109,25 @@ const Detail = () => {
                   <th scope="col">상품상태</th>
                 </tr>
               </thead>
-              <tbody>입찰테이블</tbody>
+              <tbody>
+              {product.data.map((auction)=>
+                <tr key={auction.auction_id}>
+                <td>{auction.auction_id}</td>
+                <td>
+                <Link to={"/products/detail" + product_id"}>
+                </Link>
+                </td>
+                  <td>{auction.email}</td>
+                  <td> {auction.auction_price}</td>
+                  <td> {auction.actuion_status}</td>
+                </tr>
+               ))}
+              </tbody>
             </table> */}
             <div className="d-grid gap-2 d-md-flex justify-content-md-end">
               <button className="btn btn-warning" type="button">
-                {/* 여기 onClick하면 상품 구매하기 페이지로가야됨(준영님) */}
+                {/* 여기 onClick하면 상품 구매하기 페이지로가야됨(준영님) 
+                이 부분이 작성자 권한이 있을 때만 수정이 가능하게끔 해야함 */}
                 수정
               </button>
             </div>
