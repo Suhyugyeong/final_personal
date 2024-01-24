@@ -125,7 +125,10 @@ const Bidding = () => {
                       htmlFor="formFileMultiple"
                       className="form-label"
                     ></label>
-                    <input type="submit" value="사진 업로드" />
+                    <button type="submit" className="btn btn-outline-secondary">
+                      사진업로드
+                    </button>
+                    {/* <input type="submit" value="사진 업로드" /> */}
                     {/* 여기 action을 넣어야겠지..? */}
                   </div>
                 </div>
