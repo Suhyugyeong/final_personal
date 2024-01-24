@@ -4,6 +4,8 @@ const path = require("path");
 const morgan = require("morgan");
 const cors = require("cors");
 const nunjucks = require("nunjucks");
+const cookieParser = require("cookie-parser"); //추가
+const session = require("express-session"); //추가
 
 // 프로젝트 루트에 .env 파일을 이용하겠다. .env를 다른폴더에서 사용하려면 config(매개변수)에 지정
 require("dotenv").config();
@@ -20,8 +22,28 @@ nunjucks.configure("common/views", {
 });
 
 app.use(morgan("dev"));
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentiials: true,
+  })
+); //여기 추가 요청 허용
 app.use(express.static(path.join(__dirname, "public")));
+
+app.use(cookieParser("secret@1234"));
+app.use(
+  session({
+    secret: "secret@1234",
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+      httpOnly: true,
+    },
+  })
+);
+//여기 추가
+//쿠키 파서로 쿠키 파싱, 클라이언트로부터 오는 쿠키 데이터 읽음, 시크릿 키로 변조 방지
+//express-session 미들웨어로 세션 관리
 
 // 클라이언트 요청 데이터, 응답 데이터를 위해서 등록
 app.use(express.json());

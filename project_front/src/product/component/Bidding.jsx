@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Table from "./Table";
+//Bidding 페이지에서 입력받은 값을 Table에 전달하고, 그게 Detail 페이지의 일부 내용으로 들어가야함..
 // import Detail from "./Detail";
 
 const Bidding = () => {
@@ -14,6 +16,7 @@ const Bidding = () => {
     product_status: "",
     createAt: "",
   });
+
   const changeData = useCallback(
     (e) => {
       setProduct({ ...product, [e.target.name]: e.target.value });
@@ -125,10 +128,9 @@ const Bidding = () => {
                       htmlFor="formFileMultiple"
                       className="form-label"
                     ></label>
-                    <button type="submit" className="btn btn-outline-secondary">
+                    {/* <button type="submit" className="btn btn-outline-secondary">
                       사진업로드
-                    </button>
-                    {/* <input type="submit" value="사진 업로드" /> */}
+                    </button> */}
                     {/* 여기 action을 넣어야겠지..? */}
                   </div>
                 </div>

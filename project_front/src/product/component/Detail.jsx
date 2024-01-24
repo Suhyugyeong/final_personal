@@ -2,7 +2,7 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import React, { useCallback, useState, useEffect } from "react";
-import Table from "./Table";
+// import Table from "./Table"; //
 
 const Detail = () => {
   const navigate = useNavigate();
@@ -20,6 +20,7 @@ const Detail = () => {
     cnt: "",
     createAt: "",
   });
+  // const [auctionData, setAuctionData] = useState([]); //
 
   const getDetail = async () => {
     const resp = await axios.get(
@@ -30,6 +31,21 @@ const Detail = () => {
   useEffect(() => {
     getDetail();
   }, []);
+
+  // useEffect(() => {
+  //   //
+  //   const fetchAuctionData = async () => {
+  //     try {
+  //       const response = await axios.get("URL_TO_FETCH_AUCTION_DATA");
+  //       setAuctionData(response.data.data);
+  //     } catch (error) {
+  //       console.error("Error fetching auction data:", error);
+  //     }
+  //   };
+
+  //   fetchAuctionData();
+  // }, []);
+
   return (
     <div>
       <div className="product_image_area section_padding">
@@ -99,7 +115,10 @@ const Detail = () => {
                 <span>입찰 현황을 확인하세요.</span>
               </div>
             </div>
-            <div>{Table}</div>
+            <div>
+              {/* <Table auction={auctionData} /> */}
+              {/*  */}
+            </div>
             {/* <table className="table table-hover">
               <thead>
                 <tr>

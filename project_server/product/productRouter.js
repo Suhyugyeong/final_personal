@@ -10,7 +10,40 @@ const path = require("path");
 //     res.json(resp);
 //   });
 // });
-//화면메인 부분 -준영님
+// 화면메인 부분 -준영님
+
+const upload = multer({
+  storage: multer.diskStorage({
+    destination(req, file, done) {
+      done(null, "public/upload/");
+    },
+    filename(req, file, done) {
+      const ext = path.extname(file.originalname);
+      done(null, path.basename(file.originalname, ext) + Date.now() + ext);
+    },
+  }),
+  limits: { fileSize: 5 * 1024 * 1024 },
+});
+
+router.post("/upload", (req, res, next) => {
+  const pictureUpload = upload.single("file1"); //여기 파일 front bidding이랑 맞춤
+
+  pictureUpload(req, res, function (err) {
+    if (err instanceof multer.MulterError) {
+      console.log(err);
+      res.json({ status: 500, message: "error" });
+    } else if (err) {
+      console.log(err);
+      res.json({ status: 500, message: "error" });
+    } else {
+      console.log("upload router....");
+      const data = req.body;
+      console.log("title", data.title);
+      console.log("file", req.file.filename);
+      res.json({ status: 200, message: "OK", data: req.file.filename });
+    }
+  });
+});
 
 router.get("/detail/:id", function (req, res, next) {
   console.log("디테일 불러오기");
@@ -43,25 +76,7 @@ router.get("/biddingTable", function (req, res, next) {
     res.json(resp);
   });
 });
-//라우터 수정해야할 것 같음...
-
-//multer
-const upload = multer({
-  storage: multer.diskStorage({
-    destination(req, file, done) {
-      done(null, "uploads/"); //파일은 uploads에 저장될거
-    },
-    filename(req, file, done) {
-      const ext = path.extname(file.originalname);
-      done(null, path.basename(file.originalname, ext) + Date.now() + ext);
-    },
-  }),
-  limits: { fileSize: 5 * 1024 * 1024 },
-});
-router.post("/uploads", upload.single("file1"), (req, res) => {
-  console.log("사진 업로드");
-  res.send("ok");
-});
+//라우터 수정해야할 것 같음... 동일 라우터는 안 됨. 디테일 페이지에서 보여주었으면 좋겠음
 
 // router.get("/", function (req, res) {
 //   res.send("products.ok");
@@ -73,6 +88,28 @@ router.post("/uploads", upload.single("file1"), (req, res) => {
 
 // router.get("/bidding", function (req, res) {
 //   res.send("bidding.ok");
+// });
+
+//multer
+// const storage = multer({
+//   storage: multer.diskStorage({
+//     destination(req, file, done) {
+//       done(null, "uploads/"); //파일은 uploads에 저장될거
+//     },
+//     filename(req, file, done) {
+//       const ext = path.extname(file.originalname);
+//       done(null, path.basename(file.originalname, ext) + Date.now() + ext);
+//     },
+//   }),
+//   limits: { fileSize: 5 * 1024 * 1024 },
+// });
+// const upload = multer({ storage: storage });
+// router.get("/uploads", function (req, res) {
+//   res.render("uploads.ejs");
+// });
+// router.post("/uploads", upload.single("file1"), (req, res) => {
+//   console.log("사진 업로드");
+//   res.send("ok");
 // });
 
 module.exports = router;

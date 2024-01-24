@@ -1,7 +1,7 @@
 import React from "react";
-
+import Bidding from "./Bidding";
 //auctionData라는 prop으로 입찰 데이터
-const Table = ({ auctionData }) => {
+const Table = ({ auction }) => {
   return (
     <div>
       <table className="table table-hover">
@@ -14,7 +14,7 @@ const Table = ({ auctionData }) => {
           </tr>
         </thead>
         <tbody>
-          {action.data.map((auction) => (
+          {auction.data.map((auction) => (
             <tr key={auction.auction_id}>
               <td>{auction.auction_id}</td>
               <td>
