@@ -58,7 +58,7 @@ const upload = multer({
   }),
   limits: { fileSize: 5 * 1024 * 1024 },
 });
-router.post("/uploads", upload.single("image"), (req, res) => {
+router.post("/uploads", upload.single("file1"), (req, res) => {
   console.log("사진 업로드");
   res.send("ok");
 });

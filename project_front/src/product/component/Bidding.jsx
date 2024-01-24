@@ -102,25 +102,34 @@ const Bidding = () => {
                   <option value="3">하</option>
                 </select>
               </div>
-              <div className="form-item">
-                <label className="form-label my-3">
-                  사진첨부<sup>*</sup>
-                </label>
-                {/* 이 부분에 사진 등록 버튼이 필요하려나? */}
-                <div className="mb-3">
-                  <input
-                    className="form-control"
-                    type="file"
-                    id="formFileMultiple"
-                    multiple
-                    onChange={changeData}
-                  />
-                  <label
-                    htmlFor="formFileMultiple"
-                    className="form-label"
-                  ></label>
+              <form
+                id="form"
+                action="/upload"
+                method="post"
+                encType="multipart/form-data"
+              >
+                <div className="form-item">
+                  <label className="form-label my-3">
+                    사진첨부<sup>*</sup>
+                  </label>
+                  <div className="mb-3">
+                    <input
+                      name="file1"
+                      // 여기 추가
+                      type="file"
+                      className="form-control"
+                      id="formFileMultiple"
+                      multiple
+                    />
+                    <label
+                      htmlFor="formFileMultiple"
+                      className="form-label"
+                    ></label>
+                    <input type="submit" value="사진 업로드" />
+                    {/* 여기 action을 넣어야겠지..? */}
+                  </div>
                 </div>
-              </div>
+              </form>
               <div className="form-item">
                 <label className="form-label my-3">
                   상세내용(선택사항)<sup></sup>
