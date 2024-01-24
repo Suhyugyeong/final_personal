@@ -1,5 +1,6 @@
 import React from "react";
 
+//auctionData라는 prop으로 입찰 데이터
 const Table = ({ auctionData }) => {
   return (
     <div>
@@ -13,7 +14,7 @@ const Table = ({ auctionData }) => {
           </tr>
         </thead>
         <tbody>
-          {auction.data.map((auction) => (
+          {action.data.map((auction) => (
             <tr key={auction.auction_id}>
               <td>{auction.auction_id}</td>
               <td>

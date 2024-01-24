@@ -3,18 +3,6 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import React, { useCallback, useState, useEffect } from "react";
 import Table from "./Table";
-// import Detail = ({DetailData})=>{
-//     return(
-//         <div>
-//         {/* 상품 세부 정보 표시 부분 */}
-//         <h2>Product Detail</h2>
-//         {/* 기존 상품 세부 정보 표시 내용 */}
-
-//         {/* 추가된 내용을 위한 테이블 */}
-//         <Table productData={DetailData.additionalData} />
-//       </div>
-//     )
-// }
 
 const Detail = () => {
   const navigate = useNavigate();
@@ -125,6 +113,7 @@ const Detail = () => {
             </table> */}
             <div className="d-grid gap-2 d-md-flex justify-content-md-end">
               <button className="btn btn-warning" type="button">
+                {/* 여기 onClick하면 상품 구매하기 페이지로가야됨(준영님) */}
                 수정
               </button>
             </div>
