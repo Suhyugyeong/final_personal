@@ -29,14 +29,6 @@ router.post("/bidding", (req, res, next) => {
   });
 });
 
-router.get("/biddingTable", function (req, res, next) {
-  console.log("낙찰테이블 불러오기");
-  productDAO.biddingTable((resp) => {
-    res.json(resp);
-  });
-});
-//라우터 수정해야할 것 같음...
-
 router.post("/update", function (req, res, next) {
   console.log("게시글 수정하기");
   const data = req.body;
@@ -44,6 +36,14 @@ router.post("/update", function (req, res, next) {
     res.json(resp);
   });
 });
+
+router.get("/biddingTable", function (req, res, next) {
+  console.log("낙찰테이블 불러오기");
+  productDAO.biddingTable((resp) => {
+    res.json(resp);
+  });
+});
+//라우터 수정해야할 것 같음...
 
 //multer
 const upload = multer({

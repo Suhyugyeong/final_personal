@@ -50,6 +50,7 @@ const productDAO = {
     }
   },
 
+  //biddingTable....여기!
   biddingTable: async (item, callback) => {
     let conn = null;
     try {
