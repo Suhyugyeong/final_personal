@@ -2,7 +2,7 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import React, { useCallback, useState, useEffect } from "react";
-import Table from "./Table"; //
+import Table from "./Table";
 
 const Detail = () => {
   const navigate = useNavigate();
@@ -39,36 +39,12 @@ const Detail = () => {
   useEffect(() => {
     getDetail();
   }, []);
-  // useEffect(() => {
-  //   const futureDate = new Date("2024/02/02 00:00:00").getTime();
 
-  //   const updateTimer = () => {
-  //     const now = new Date().getTime();
-  //     const diff = futureDate - now;
-
-  //     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  //     const hours = Math.floor(
-  //       (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-  //     );
-  //     const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-  //     const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-  //     setTimeLeft({
-  //       days,
-  //       hours,
-  //       minutes,
-  //       seconds,
-  //     });
-  //   };
-
-  //   const timerId = setInterval(updateTimer, 1000);
-
-  //   return () => clearInterval(timerId);
-  // }, []);
+  //여기 타이머는 지움
 
   return (
     <div>
-      {product.auctions.length}
+      {/* {product.auctions.length} */}
       <div className="product_image_area section_padding">
         <div className="container">
           <div className="row s_product_inner justify-content-between">
@@ -80,21 +56,19 @@ const Detail = () => {
             </div>
             <div className="col-lg-5 col-xl-4">
               <div className="s_product_text">
-                <h3>{product.title}</h3> <br />
-                <h3>책제목</h3>
+                <h3>{product.title}</h3>
                 <ul className="list">
                   <li>
                     <a href="#">
-                      {" "}
-                      <span>{product.isbn}: In Stock</span>
+                      <span>{product.isbn}</span>
                       <br />
-                      <span>{product.title}: In Stock</span>
+                      <span>입찰시작일:{product.createAt}</span>
                     </a>
                   </li>
                   <br />
                 </ul>
                 <p></p>
-                <div id="timer">
+                {/* <div id="timer">
                   <h3>낙찰종료시간</h3>
                   <div>
                     {timeLeft.days}
@@ -112,7 +86,7 @@ const Detail = () => {
                     {timeLeft.seconds}
                     <span>Seconds</span>
                   </div>
-                </div>
+                </div> */}
                 {/* <h3>{product.endtime}</h3> */}
                 <br />
                 <button
