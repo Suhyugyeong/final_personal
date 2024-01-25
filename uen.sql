@@ -75,8 +75,9 @@ CREATE TABLE IF NOT EXISTS notice_board ( -- 고객센터
 
 
 
-INSERT INTO product (product_id, title, email, picture, master_price, auction_id, endtime, auction_status, isbn, content, cnt, createAt) 
-VALUES (?, '콜레라시대의사랑', 'c@c.c', '1645123456789', 48000, ? , NOW(), 'a', '135245682', '삽니다', ?, NOW());
+insert into product (title, author, isbn, auction_price, picture, product_status, createAt) 
+values ('콜레라시대의사랑','마르케스','1645123456785',40000,'public/upload/이미지파일.jpg','a',now())
+-- 이미지파일 불러오는게..
 
 INSERT INTO auction (auction_id, product_id, email, auction_price, product_status, createAt) 
 VALUES (?, 1, "c@c.c", 40000, 'a', now())

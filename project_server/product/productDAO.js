@@ -6,7 +6,8 @@ const sql = {
   update:
     "update product set master_price =?, content = ? where product_id = ?", //update
   bidding:
-    "insert into product (title, author, isbn, auction_price, picture, product_status, createAt) values (?,?,?,?,?,?,?)", //create
+    "insert into product (title, author, isbn, auction_price, picture, product_status, createAt) values (?,?,?,?,?,?,?)",
+  //create 여기 사진 부분 처리가..
   biddingTable:
     "insert into auction (email, auction_price, product_status) values (?, ?, ?)", // update가 아니라 create
 };
@@ -18,6 +19,7 @@ const productDAO = {
     try {
       conn = await getPool().getConnection();
       const [resp] = await conn.query(sql.detail, [item.product_id]); //바인딩할 변수가 필요 sql 쿼리에서 사용하는 ?자리를 채워놓음
+      // callback({ status: 200, message: "ok", data: Array.isArray(resp) ? resp[0] : resp })
       callback({ status: 200, message: "ok", data: resp });
     } catch (error) {
       return { status: 500, message: "디테일 불러들이기 실패", error: error };

@@ -172,7 +172,8 @@ const Bidding = () => {
               </div>
               <form
                 id="form"
-                action="#"
+                action="/upload"
+                //액션 업로드로 해줌
                 method="post"
                 encType="multipart/form-data"
               >
@@ -340,7 +341,7 @@ const Bidding = () => {
                   onClick={insertBidding}
                 >
                   입찰하기
-                  {/* 여기가 안 먹음요 */}
+                  {/* 낙찰페이지 불러오기 콘솔은 찍히는데... 변화가 없다... */}
                 </button>
               </div>
             </div>
