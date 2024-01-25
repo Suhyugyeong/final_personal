@@ -117,23 +117,25 @@ const Bidding = () => {
                       제목, 저자, ISBN<sup>*</sup>
                     </label>
                     <div className="input-group mb-3">
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="제목, 저자, ISBN"
-                        aria-label="Recipient's username"
-                        aria-describedby="button-addon2"
-                        onClick={changeData}
-                        // 여기서 api 가져오는게 필요해서...
-                      />
-                      <button
-                        className="btn btn-outline-secondary"
-                        type="button"
-                        id="button-addon2"
-                        onClick={changeData}
-                      >
-                        검색
-                      </button>
+                      <form action="/upload" method="post">
+                        <input
+                          type="text"
+                          className="form-control"
+                          placeholder="제목, 저자, ISBN"
+                          aria-label="Recipient's username"
+                          aria-describedby="button-addon2"
+                          onClick={changeData}
+                          // 여기서 api 가져오는게 필요해서...
+                        />
+                        <button
+                          className="btn btn-outline-secondary"
+                          type="button"
+                          id="button-addon2"
+                          onClick={changeData}
+                        >
+                          검색
+                        </button>
+                      </form>
                     </div>
                   </div>
                 </div>
@@ -146,30 +148,34 @@ const Bidding = () => {
                   입찰가(원)<sup>*</sup>
                 </label>
                 <div className="input-group">
-                  <input
-                    type="text"
-                    className="form-control"
-                    aria-label="Dollar amount (with dot and two decimal places)"
-                    onChange={changeData}
-                  />
-                  <span className="input-group-text">₩</span>
-                  <span className="input-group-text">WON</span>
+                  <form action="/upload" method="post">
+                    <input
+                      type="text"
+                      className="form-control"
+                      aria-label="Dollar amount (with dot and two decimal places)"
+                      onChange={changeData}
+                    />
+                    <span className="input-group-text">₩</span>
+                    <span className="input-group-text">WON</span>
+                  </form>
                 </div>
               </div>
               <div className="form-item">
                 <label className="form-label my-3">
                   품질등급 <sup>*</sup>
                 </label>
-                <select
-                  className="form-select"
-                  aria-label="Default select example"
-                  onChange={changeData}
-                >
-                  <option>품질을 선택해주세요.</option>
-                  <option value="1">상</option>
-                  <option value="2">중</option>
-                  <option value="3">하</option>
-                </select>
+                <form action="/upload" method="post">
+                  <select
+                    className="form-select"
+                    aria-label="Default select example"
+                    onChange={changeData}
+                  >
+                    <option>품질을 선택해주세요.</option>
+                    <option value="1">상</option>
+                    <option value="2">중</option>
+                    <option value="3">하</option>
+                  </select>
+                </form>
               </div>
               <form
                 id="form"
@@ -225,16 +231,19 @@ const Bidding = () => {
                 <label className="form-label my-3">
                   상세내용(선택사항)<sup></sup>
                 </label>
+                {/* 여기 체크 안 하면 경고 메시지 띄우고 싶음 */}
                 <div className="form-item">
-                  <textarea
-                    name="text"
-                    className="form-control"
-                    spellCheck="false"
-                    cols="30"
-                    rows="11"
-                    placeholder="제품 상세 내용"
-                    onChange={changeData}
-                  ></textarea>
+                  <form action="/upload" method="post">
+                    <textarea
+                      name="text"
+                      className="form-control"
+                      spellCheck="false"
+                      cols="30"
+                      rows="11"
+                      placeholder="제품 상세 내용"
+                      onChange={changeData}
+                    ></textarea>
+                  </form>
                 </div>
               </div>
               <div className="form-check my-3"></div>
