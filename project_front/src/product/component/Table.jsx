@@ -1,7 +1,10 @@
 import React from "react";
-import Bidding from "./Bidding";
+// import Bidding from "./Bidding";
+import { Link } from "react-router-dom";
 //auctionData라는 prop으로 입찰 데이터
-const Table = ({ auctionData }) => {
+const Table = (props) => {
+  console.dir(props);
+  let auctionDatas = props.auctions;
   // useEffect(() => {
   //   //
   //   const fetchAuctionData = async () => {
@@ -28,13 +31,11 @@ const Table = ({ auctionData }) => {
           </tr>
         </thead>
         <tbody>
-          {auction.data.map((auction) => (
+          {auctionDatas.map((auction) => (
             <tr key={auction.auction_id}>
               <td>{auction.auction_id}</td>
               <td>
-                <Link to={"/products/detail" + product_id}>
-                  {/* 입찰하기 버튼을 누르면 ... */}
-                </Link>
+                <Link to={`/products/detail/${auction.product_id}`}></Link>
               </td>
               <td>{auction.email}</td>
               <td> {auction.auction_price}</td>

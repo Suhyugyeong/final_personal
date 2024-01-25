@@ -8,7 +8,7 @@ const ProductMain = () => {
     <div>
       <h2>제품 페이지</h2>
       <Routes>
-        <Route path="/detail/:id" element={<Detail />} />
+        <Route path="/detail/:product_id" element={<Detail />} />
         <Route path="/bidding" element={<Bidding />} />
         <Route path="/update/:id" element={<Update />} />
       </Routes>

@@ -3,6 +3,7 @@ const getPool = require("../common/pool");
 
 const sql = {
   detail: "select * from product where product_id = ?", //read
+  detail_auction: "select * from auction where product_id = ?",
   update:
     "update product set master_price =?, content = ? where product_id = ?", //update
   bidding:
@@ -17,11 +18,21 @@ const productDAO = {
     //item 매개변수로 조회하고자 하는 상품의 정보가 담긴 객체를 받음
     let conn = null;
     try {
+      console.log("dao detail", item.product_id);
       conn = await getPool().getConnection();
       const [resp] = await conn.query(sql.detail, [item.product_id]); //바인딩할 변수가 필요 sql 쿼리에서 사용하는 ?자리를 채워놓음
       // callback({ status: 200, message: "ok", data: Array.isArray(resp) ? resp[0] : resp })
+      if (resp !== null && resp.length > 0) {
+        console.log("11");
+        const [auction_resp] = await conn.query(sql.detail_auction, [
+          item.product_id,
+        ]);
+        resp[0]["auctions"] = auction_resp;
+        console.log(resp);
+      }
       callback({ status: 200, message: "ok", data: resp });
     } catch (error) {
+      console.log(error);
       return { status: 500, message: "디테일 불러들이기 실패", error: error };
     } finally {
       if (conn !== null) conn.release();
