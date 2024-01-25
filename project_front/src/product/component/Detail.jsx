@@ -82,15 +82,16 @@ const Detail = () => {
                   <li>
                     <a href="#">
                       {" "}
-                      <span>{product.isbn}</span> : In Stock
+                      <span>{product.isbn}: In Stock</span>
                       <br />
-                      <span>{product.title}</span> : In Stock
+                      <span>{product.title}: In Stock</span>
                     </a>
                   </li>
                   <br />
                 </ul>
                 <p></p>
                 <div id="timer">
+                  <h3>낙찰종료시간</h3>
                   <div>
                     {timeLeft.days}
                     <span>Days</span>
@@ -109,7 +110,6 @@ const Detail = () => {
                   </div>
                 </div>
                 {/* <h3>{product.endtime}</h3> */}
-                <h3>타이머</h3>
                 <br />
                 <button
                   className="btn_3"
