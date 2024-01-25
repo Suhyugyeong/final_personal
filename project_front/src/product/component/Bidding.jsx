@@ -1,9 +1,7 @@
 import axios from "axios";
 import React, { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Table from "./Table";
-//Bidding 페이지에서 입력받은 값을 Table에 전달하고, 그게 Detail 페이지의 일부 내용으로 들어가야함..
-// import Detail from "./Detail";
+//Bidding 페이지에서 입력받은 값을 Table에 전달해야 되는데..
 
 const Bidding = () => {
   const navigate = useNavigate();
@@ -12,7 +10,7 @@ const Bidding = () => {
     author: "",
     isbn: "",
     auction_price: "",
-    picture: "", //여기의 사진을..
+    picture: "",
     product_status: "",
     createAt: "",
   });
@@ -27,8 +25,6 @@ const Bidding = () => {
     },
     [product]
   );
-  //bidding 페이지는 글을 쓰는거긴 한데, insert랑은 조금 다른 느낌 아닌가?
-  //bidding으로 product가 추가되면 list가 업데이틑되는거니까 맞나??
 
   const insertBidding = async (e) => {
     e.preventDefault();
@@ -196,7 +192,7 @@ const Bidding = () => {
                     <input
                       type="button"
                       value="업로드"
-                      onClick={upload}
+                      // onClick={upload}
                       onClick={insertBidding}
                     />
                     {/* <input
@@ -262,7 +258,7 @@ const Bidding = () => {
                         </div>
                       </td>
                       <td className="py-5">
-                        Awesome Brocoli(여기 사진이 들어가면 좋겠음)
+                        Awesome Brocoli(여기 api 결과가 들어갔음 좋겠음)
                         {/* {uploadImage ? (
                           <img
                             src={`http://localhost:8000/upload/${uploadImage}`}
@@ -326,19 +322,21 @@ const Bidding = () => {
                   </p>
                 </div>
               </div>
+              <br />
+              <br />
               <div className="d-grid gap-2 col-6 mx-auto">
                 <button
                   className="btn btn-secondary"
                   type="button"
                   onClick={() => navigate(`/detail/${product.product_id}`)} //백택사용
                 >
-                  {/* 원래 보고 있던 detail 페이지로 돌아가려면 product_id로 해도 되나 숫자로 받는데 string을 해줘야됨?*/}
                   취소하기
                 </button>
                 <button
                   className="btn btn-info"
                   type="button"
                   onClick={insertBidding}
+                  style={{ backgroundColor: "#e83e8c" }}
                 >
                   입찰하기
                   {/* 낙찰페이지 불러오기 콘솔은 찍히는데... 변화가 없다... */}

@@ -3,7 +3,7 @@ const getPool = require("../common/pool");
 
 const sql = {
   detail: "select * from product where product_id = ?", //read
-  detail_auction: "select * from auction where product_id = ?",
+  detail_auction: "select * from auction where product_id = ?", //여기 추가함
   update:
     "update product set master_price =?, content = ? where product_id = ?", //update
   bidding:
@@ -30,6 +30,7 @@ const productDAO = {
         resp[0]["auctions"] = auction_resp;
         console.log(resp);
       }
+      // 여기 if문 추가
       callback({ status: 200, message: "ok", data: resp });
     } catch (error) {
       console.log(error);

@@ -1,6 +1,4 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
-import React, { useCallback, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 const Timer = () => {
   const [timeLeft, setTimeLeft] = useState({

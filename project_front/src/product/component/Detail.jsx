@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import React, { useCallback, useState, useEffect } from "react";
 import Table from "./Table";
+import Timer from "./timer";
 
 const Detail = () => {
   const navigate = useNavigate();
@@ -20,13 +21,7 @@ const Detail = () => {
     cnt: "",
     createAt: "",
     auctions: [],
-  });
-  // const [auctionData, setAuctionData] = useState([]);
-  const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
+    // 여기 Table의 auctions
   });
   const getDetail = async () => {
     // console.log("1111", product_id);
@@ -40,11 +35,8 @@ const Detail = () => {
     getDetail();
   }, []);
 
-  //여기 타이머는 지움
-
   return (
     <div>
-      {/* {product.auctions.length} */}
       <div className="product_image_area section_padding">
         <div className="container">
           <div className="row s_product_inner justify-content-between">
@@ -57,37 +49,20 @@ const Detail = () => {
             <div className="col-lg-5 col-xl-4">
               <div className="s_product_text">
                 <h3>{product.title}</h3>
+                <br />
                 <ul className="list">
                   <li>
-                    <a href="#">
-                      <span>{product.isbn}</span>
-                      <br />
-                      <span>입찰시작일:{product.createAt}</span>
-                    </a>
+                    <span>ISBN : {product.isbn}</span>
+                    <br />
+                    <span>입찰시작일 : {product.createAt}</span>
                   </li>
                   <br />
                 </ul>
                 <p></p>
-                {/* <div id="timer">
-                  <h3>낙찰종료시간</h3>
-                  <div>
-                    {timeLeft.days}
-                    <span>Days</span>
-                  </div>
-                  <div>
-                    {timeLeft.hours}
-                    <span>Hours</span>
-                  </div>
-                  <div>
-                    {timeLeft.minutes}
-                    <span>Minutes</span>
-                  </div>
-                  <div>
-                    {timeLeft.seconds}
-                    <span>Seconds</span>
-                  </div>
-                </div> */}
-                {/* <h3>{product.endtime}</h3> */}
+                {/* p태그에 라인 있음 */}
+                <h3>낙찰까지 남은 시간</h3>
+                <Timer />
+                <br />
                 <br />
                 <button
                   className="btn_3"
@@ -95,20 +70,17 @@ const Detail = () => {
                   onClick={() => navigate("/products/bidding/")}
                 >
                   판매입찰하기
-                  {/* 슬래시 없으면 상대경로라서 http://localhost:5173/products/detail/1/products/bidding 여기로 감.. */}
                 </button>
                 <br />
                 <br />
                 <button
                   className="btn_3"
                   onClick={() => navigate("/products/bidding")}
+                  // 여기 구매페이지는 없으니까... 어떻게 할지?
                 >
-                  즉시구매가 {product.master_price}
+                  즉시구매가 {product.master_price} 원(₩)
                   <br />
-                  {/* {product.auctions[0].auction_id} */}
-                  {/* 슬래시 없으면 상대경로라서 http://localhost:5173/products/detail/1/products/bidding 여기로 감.. */}
                 </button>
-                {/* <h2>{product.master_price}</h2> */}
               </div>
             </div>
           </div>
@@ -134,8 +106,8 @@ const Detail = () => {
             </div>
             <div>
               <Table auctions={product.auctions} />
+              {/* 여기서 상품상태가 안 뜸.. */}
             </div>
-
             <div className="d-grid gap-2 d-md-flex justify-content-md-end">
               <button className="btn btn-warning" type="button">
                 {/* 여기 onClick하면 상품 구매하기 페이지로가야됨(준영님) 

@@ -9,8 +9,9 @@ const ProductMain = () => {
       <h2>제품 페이지</h2>
       <Routes>
         <Route path="/detail/:product_id" element={<Detail />} />
+        {/* 여기를 detail쪽에서 설정한 변수랑 똑같이 맞춰야되니까 product_id로 */}
         <Route path="/bidding" element={<Bidding />} />
-        <Route path="/update/:id" element={<Update />} />
+        <Route path="/update/:product_id" element={<Update />} />
       </Routes>
     </div>
   );

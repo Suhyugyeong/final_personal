@@ -34,6 +34,6 @@ const Update = () => {
     //서버에서 json 형식으로 데이터를 받기를..
     navigate("product/detail/" + product_id);
   };
-  return <h1>테스트</h1>;
+  return <h1>html 작성해야함</h1>;
 };
 export default Update;
