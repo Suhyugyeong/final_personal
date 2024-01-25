@@ -1,7 +1,21 @@
 import React from "react";
 import Bidding from "./Bidding";
 //auctionData라는 prop으로 입찰 데이터
-const Table = ({ auction }) => {
+const Table = ({ auctionData }) => {
+  // useEffect(() => {
+  //   //
+  //   const fetchAuctionData = async () => {
+  //     try {
+  //       const response = await axios.get("URL_TO_FETCH_AUCTION_DATA");
+  //       setAuctionData(response.data.data);
+  //     } catch (error) {
+  //       console.error("Error fetching auction data:", error);
+  //     }
+  //   };
+
+  //   fetchAuctionData();
+  // }, []);
+
   return (
     <div>
       <table className="table table-hover">

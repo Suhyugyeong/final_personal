@@ -32,20 +32,6 @@ const Detail = () => {
     getDetail();
   }, []);
 
-  // useEffect(() => {
-  //   //
-  //   const fetchAuctionData = async () => {
-  //     try {
-  //       const response = await axios.get("URL_TO_FETCH_AUCTION_DATA");
-  //       setAuctionData(response.data.data);
-  //     } catch (error) {
-  //       console.error("Error fetching auction data:", error);
-  //     }
-  //   };
-
-  //   fetchAuctionData();
-  // }, []);
-
   return (
     <div>
       <div className="product_image_area section_padding">
@@ -53,9 +39,13 @@ const Detail = () => {
           <div className="row s_product_inner justify-content-between">
             <div className="col-lg-7 col-xl-7">
               <div className="product_slider_img">
-                <div id="vertical">
+                <img src="./bmicbook/book_image1.jpg" />
+                {/* <div id="vertical">
                   <div data-thumb="img/product/single-product/book_img.jpg">
-                    <img src="img/product/single-product/product_1.png" />
+                    <img src="/front/src/product/component/bmicbook/book_image1.jpg" />
+                  </div>
+                  <div data-thumb="img/product/single-product/product_1.png">
+                    <img src="/front/src/product/component/bmicbook/book_image1.jpg" />
                   </div>
                   <div data-thumb="img/product/single-product/product_1.png">
                     <img src="img/product/single-product/product_1.png" />
@@ -63,10 +53,7 @@ const Detail = () => {
                   <div data-thumb="img/product/single-product/product_1.png">
                     <img src="img/product/single-product/product_1.png" />
                   </div>
-                  <div data-thumb="img/product/single-product/product_1.png">
-                    <img src="img/product/single-product/product_1.png" />
-                  </div>
-                </div>
+                </div> */}
               </div>
             </div>
             <div className="col-lg-5 col-xl-4">
@@ -77,6 +64,7 @@ const Detail = () => {
                     <a href="#">
                       {" "}
                       <span>{product.isbn}</span> : In Stock
+                      <span>{product.title}</span> : In Stock
                     </a>
                   </li>
                   <br />
@@ -91,7 +79,17 @@ const Detail = () => {
                   판매입찰하기
                   {/* 슬래시 없으면 상대경로라서 http://localhost:5173/products/detail/1/products/bidding 여기로 감.. */}
                 </button>
-                <h2>{product.master_price}</h2>
+                <br />
+                <br />
+                <button
+                  className="btn_3"
+                  onClick={() => navigate("/products/bidding")}
+                >
+                  즉시구매가 {product.master_price}
+                  <br />
+                  {/* 슬래시 없으면 상대경로라서 http://localhost:5173/products/detail/1/products/bidding 여기로 감.. */}
+                </button>
+                {/* <h2>{product.master_price}</h2> */}
               </div>
             </div>
           </div>
