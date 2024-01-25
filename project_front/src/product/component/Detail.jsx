@@ -21,7 +21,12 @@ const Detail = () => {
     createAt: "",
   });
   // const [auctionData, setAuctionData] = useState([]); //
-
+  const [timeLeft, setTimeLeft] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
   const getDetail = async () => {
     const resp = await axios.get(
       "http://localhost:8000/products/detail/" + product_id
@@ -31,6 +36,32 @@ const Detail = () => {
   useEffect(() => {
     getDetail();
   }, []);
+  useEffect(() => {
+    const futureDate = new Date("2024/02/02 00:00:00").getTime();
+
+    const updateTimer = () => {
+      const now = new Date().getTime();
+      const diff = futureDate - now;
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor(
+        (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      setTimeLeft({
+        days,
+        hours,
+        minutes,
+        seconds,
+      });
+    };
+
+    const timerId = setInterval(updateTimer, 1000);
+
+    return () => clearInterval(timerId);
+  }, []);
 
   return (
     <div>
@@ -39,42 +70,50 @@ const Detail = () => {
           <div className="row s_product_inner justify-content-between">
             <div className="col-lg-7 col-xl-7">
               <div className="product_slider_img">
-                <img src="./bmicbook/book_image1.jpg" />
-                {/* <div id="vertical">
-                  <div data-thumb="img/product/single-product/book_img.jpg">
-                    <img src="/front/src/product/component/bmicbook/book_image1.jpg" />
-                  </div>
-                  <div data-thumb="img/product/single-product/product_1.png">
-                    <img src="/front/src/product/component/bmicbook/book_image1.jpg" />
-                  </div>
-                  <div data-thumb="img/product/single-product/product_1.png">
-                    <img src="img/product/single-product/product_1.png" />
-                  </div>
-                  <div data-thumb="img/product/single-product/product_1.png">
-                    <img src="img/product/single-product/product_1.png" />
-                  </div>
-                </div> */}
+                <img src="/images/book_image1.jpg" alt="book image" />
+                {/* 여기서 api에서 받아온 사진이 올라갔으면 좋겠음.. */}
               </div>
             </div>
             <div className="col-lg-5 col-xl-4">
               <div className="s_product_text">
                 <h3>{product.title}</h3> <br />
+                <h3>책제목</h3>
                 <ul className="list">
                   <li>
                     <a href="#">
                       {" "}
                       <span>{product.isbn}</span> : In Stock
+                      <br />
                       <span>{product.title}</span> : In Stock
                     </a>
                   </li>
                   <br />
                 </ul>
                 <p></p>
-                <h3>{product.endtime}</h3>
+                <div id="timer">
+                  <div>
+                    {timeLeft.days}
+                    <span>Days</span>
+                  </div>
+                  <div>
+                    {timeLeft.hours}
+                    <span>Hours</span>
+                  </div>
+                  <div>
+                    {timeLeft.minutes}
+                    <span>Minutes</span>
+                  </div>
+                  <div>
+                    {timeLeft.seconds}
+                    <span>Seconds</span>
+                  </div>
+                </div>
+                {/* <h3>{product.endtime}</h3> */}
+                <h3>타이머</h3>
                 <br />
                 <button
                   className="btn_3"
-                  onClick={() => navigate("/products/bidding")}
+                  onClick={() => navigate(`/products/bidding/${product_id}`)}
                 >
                   판매입찰하기
                   {/* 슬래시 없으면 상대경로라서 http://localhost:5173/products/detail/1/products/bidding 여기로 감.. */}
@@ -131,7 +170,7 @@ const Detail = () => {
                 <tr key={auction.auction_id}>
                 <td>{auction.auction_id}</td>
                 <td>
-                <Link to={"/products/detail" + product_id"}>
+                <Link to={`/products/detail/${product_id}`}>
                 </Link>
                 </td>
                   <td>{auction.email}</td>
