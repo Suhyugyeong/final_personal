@@ -25,6 +25,9 @@ const Bidding = () => {
     },
     [product]
   );
+  // const changeData = (e) => {
+  //   setProduct((prevProduct) => ({ ...prevProduct, [e.target.name]: e.target.value }));
+  // };
 
   const insertBidding = async (e) => {
     e.preventDefault();
@@ -78,6 +81,8 @@ const Bidding = () => {
       console.error("에러발생", error);
     }
   };
+  //asiox.post를 사용해서 /products/bidding 엔드포인트로 post요청을 보내는중
+  //biddingData 객체는 클라이언트에서 작성한 내용이 포함되어 있음
 
   const upload = async (e) => {
     e.preventDefault();

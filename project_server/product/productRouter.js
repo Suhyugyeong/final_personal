@@ -1,8 +1,8 @@
 const express = require("express");
-const router = express.Router();
 const productDAO = require("./productDAO");
 const multer = require("multer");
 const path = require("path");
+const router = express.Router();
 
 // router.get("/productList", function (req, res, next) {
 //   console.log("상품 메인 불러오기");
