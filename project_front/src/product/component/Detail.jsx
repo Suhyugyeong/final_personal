@@ -54,6 +54,8 @@ const Detail = () => {
                   <li>
                     <span>ISBN : {product.isbn}</span>
                     <br />
+                    <span>구매희망자 : {product.email}</span>
+                    <br />
                     <span>입찰시작일 : {product.createAt}</span>
                   </li>
                   <br />
