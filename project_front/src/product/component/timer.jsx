@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 
+//assets => css => all.css 에 css 붙여놓음
+
 const Timer = () => {
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
@@ -9,6 +11,7 @@ const Timer = () => {
   });
   useEffect(() => {
     const futureDate = new Date("2024/02/02 00:00:00").getTime();
+    //사용자에게 선택을 주면 이 부분을 바꿔야 함
 
     const updateTimer = () => {
       const now = new Date().getTime();

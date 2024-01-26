@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 const Update = () => {
   const navigate = useNavigate();
   const { product_id } = useParams();
+  //해당 url에서 product_id 받아올거고
   const [product, setProduct] = useState({
     product_id: "",
     master_price: "",
@@ -23,6 +24,7 @@ const Update = () => {
     );
     setProduct(resp.data.data);
   };
+
   useEffect(() => {
     getData();
   }, []);

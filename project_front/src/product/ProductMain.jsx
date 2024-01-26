@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import Detail from "./component/Detail";
 import Bidding from "./component/Bidding";
 import Update from "./component/Update";
+//Timer랑 Table은 Detail 안에 있음
 
 const ProductMain = () => {
   return (

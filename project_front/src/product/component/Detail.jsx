@@ -108,14 +108,13 @@ const Detail = () => {
             </div>
             <div>
               <Table auctions={product.auctions} />
-              {/* 여기서 상품상태가 안 뜸.. */}
             </div>
             <div className="d-grid gap-2 d-md-flex justify-content-md-end">
               <button className="btn btn-warning" type="button">
-                {/* 여기 onClick하면 상품 구매하기 페이지로가야됨(준영님) 
-                이 부분이 작성자 권한이 있을 때만 수정이 가능하게끔 해야함 */}
                 수정
               </button>
+              {/* 여기 onClick하면 상품 구매하기 페이지로가야됨(준영님) 
+                이 부분이 작성자 권한이 있을 때만 수정이 가능하게끔 해야함 */}
             </div>
             <div className="col-lg-4 col-lx-4"></div>
             <div className="col-lg-4 col-lx-4"></div>
