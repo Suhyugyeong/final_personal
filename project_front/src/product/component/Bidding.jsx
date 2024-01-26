@@ -35,6 +35,11 @@ const Bidding = () => {
 
   const insertBidding = async (e) => {
     e.preventDefault();
+
+    if (!isChecked) {
+      alert("최종 입찰을 위해 반드시 체크박스를 선택해야 합니다.");
+      return;
+    }
     if (file) {
       const formData = new FormData();
       formData.append("file1", file);
@@ -95,6 +100,11 @@ const Bidding = () => {
       const formData = new FormData();
       formData.append("file1", file);
       formData.append("title", title);
+      formData.append("bookInfo", product.isbn);
+      //여기가 api에서 받아온 정보이기 때문에...
+      formData.append("price", product.auction_price);
+      formData.append("status", product.product_status);
+      //여기서 상세내용을 추가하려면 DB에도 추가를 해야되나?
       const resp = await axios.post(
         "http://localhost:8000/products/bidding",
         // 여기를 어떻게 수정?
@@ -180,9 +190,9 @@ const Bidding = () => {
               </div>
               <form
                 id="form"
-                action="/upload"
+                // action="/upload"
                 //액션 업로드로 해줌
-                method="post"
+                // method="post"
                 encType="multipart/form-data"
               >
                 {/* 위에 같이 보내서 써도 되나? */}
