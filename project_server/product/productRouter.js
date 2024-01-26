@@ -53,7 +53,7 @@ router.get("/detail/:id", function (req, res, next) {
     //productDAO.detail 함수의 매개변수로는 객체를 받도록 정의되어 있으니까 객체 안에 담아야함
     res.json(resp);
   });
-}); //콘솔 찍힘
+}); //콘솔 찍힘 클라이언트 http get 요청이 들어올 때 server에서 어쨌든 이 라우터 사용할거임
 
 router.post("/update", function (req, res, next) {
   console.log("게시글 수정하기");

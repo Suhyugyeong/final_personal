@@ -27,7 +27,7 @@ const productDAO = {
         const [auction_resp] = await conn.query(sql.detail_auction, [
           item.product_id,
         ]);
-        resp[0]["auctions"] = auction_resp;
+        resp[0]["auctions"] = auction_resp; //원래 상품 정보에 경매 정보 추가
         console.log(resp);
       }
       // 여기 if문 추가

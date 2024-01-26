@@ -53,7 +53,7 @@ const Bidding = () => {
         console.error("에러발생", error);
       }
     } else {
-      alert("데이터를 입력하지 않았습니다.");
+      alert("사진을 등록하지 않았습니다.");
     }
 
     const biddingData = {
@@ -107,7 +107,8 @@ const Bidding = () => {
   return (
     <div className="container-fluid py-5">
       <div className="container py-5">
-        <form action="#">
+        <form action="/upload" method="post">
+          {/* 여기 전체 감싸는 곳에 action이랑 method 줌 */}
           <div className="row g-5">
             <div className="col-md-12 col-lg-6 col-xl-7">
               <div className="row">
@@ -117,25 +118,23 @@ const Bidding = () => {
                       제목, 저자, ISBN<sup>*</sup>
                     </label>
                     <div className="input-group mb-3">
-                      <form action="/upload" method="post">
-                        <input
-                          type="text"
-                          className="form-control"
-                          placeholder="제목, 저자, ISBN"
-                          aria-label="Recipient's username"
-                          aria-describedby="button-addon2"
-                          onClick={changeData}
-                          // 여기서 api 가져오는게 필요해서...
-                        />
-                        <button
-                          className="btn btn-outline-secondary"
-                          type="button"
-                          id="button-addon2"
-                          onClick={changeData}
-                        >
-                          검색
-                        </button>
-                      </form>
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="제목, 저자, ISBN"
+                        aria-label="Recipient's username"
+                        aria-describedby="button-addon2"
+                        onClick={changeData}
+                        // 여기서 api 가져오는게 필요해서...
+                      />
+                      <button
+                        className="btn btn-outline-secondary"
+                        type="button"
+                        id="button-addon2"
+                        onClick={changeData}
+                      >
+                        검색
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -148,34 +147,31 @@ const Bidding = () => {
                   입찰가(원)<sup>*</sup>
                 </label>
                 <div className="input-group">
-                  <form action="/upload" method="post">
-                    <input
-                      type="text"
-                      className="form-control"
-                      aria-label="Dollar amount (with dot and two decimal places)"
-                      onChange={changeData}
-                    />
-                    <span className="input-group-text">₩</span>
-                    <span className="input-group-text">WON</span>
-                  </form>
+                  <input
+                    type="text"
+                    className="form-control"
+                    aria-label="Dollar amount (with dot and two decimal places)"
+                    onChange={changeData}
+                  />
+                  <span className="input-group-text">₩</span>
+                  <span className="input-group-text">WON</span>
                 </div>
               </div>
               <div className="form-item">
                 <label className="form-label my-3">
                   품질등급 <sup>*</sup>
                 </label>
-                <form action="/upload" method="post">
-                  <select
-                    className="form-select"
-                    aria-label="Default select example"
-                    onChange={changeData}
-                  >
-                    <option>품질을 선택해주세요.</option>
-                    <option value="1">상</option>
-                    <option value="2">중</option>
-                    <option value="3">하</option>
-                  </select>
-                </form>
+
+                <select
+                  className="form-select"
+                  aria-label="Default select example"
+                  onChange={changeData}
+                >
+                  <option>품질을 선택해주세요.</option>
+                  <option value="1">상</option>
+                  <option value="2">중</option>
+                  <option value="3">하</option>
+                </select>
               </div>
               <form
                 id="form"
@@ -184,6 +180,7 @@ const Bidding = () => {
                 method="post"
                 encType="multipart/form-data"
               >
+                {/* 위에 같이 보내서 써도 되나? */}
                 <div className="form-item">
                   <label className="form-label my-3">
                     사진첨부<sup>*</sup>
@@ -233,17 +230,15 @@ const Bidding = () => {
                 </label>
                 {/* 여기 체크 안 하면 경고 메시지 띄우고 싶음 */}
                 <div className="form-item">
-                  <form action="/upload" method="post">
-                    <textarea
-                      name="text"
-                      className="form-control"
-                      spellCheck="false"
-                      cols="30"
-                      rows="11"
-                      placeholder="제품 상세 내용"
-                      onChange={changeData}
-                    ></textarea>
-                  </form>
+                  <textarea
+                    name="text"
+                    className="form-control"
+                    spellCheck="false"
+                    cols="30"
+                    rows="11"
+                    placeholder="제품 상세 내용"
+                    onChange={changeData}
+                  ></textarea>
                 </div>
               </div>
               <div className="form-check my-3"></div>
@@ -316,6 +311,7 @@ const Bidding = () => {
                       value="Transfer"
                       required
                     />
+                    {/* 여기 동작 추가해야하고.. */}
                     <label className="form-check-label" htmlFor="Transfer-1">
                       최종 입찰하시겠습니까?
                     </label>
@@ -353,7 +349,9 @@ const Bidding = () => {
                   style={{ backgroundColor: "#e83e8c" }}
                 >
                   입찰하기
-                  {/* 낙찰페이지 불러오기 콘솔은 찍히는데... 변화가 없다... */}
+                  {/* 낙찰페이지 불러오기 콘솔은 찍히는데... 변화가 없다... 
+                  서버로 데이터를 전송하고 페이지 이동하는데.. 
+                  서버측 문제??*/}
                 </button>
               </div>
             </div>
