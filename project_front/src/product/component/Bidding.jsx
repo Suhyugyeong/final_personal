@@ -278,8 +278,8 @@ const Bidding = () => {
                         )} */}
                       </td>
                       <td className="py-5">$69.00</td>
-                      <td className="py-5">2</td>
                       <td className="py-5"></td>
+                      <td className="py-5">2</td>
                       {/* 이쪽 td는 전부 책 검색하고 나서 선택한 결과가 들어갔으면 좋겠음..되려나? */}
                     </tr>
                     <tr>
