@@ -17,6 +17,7 @@ const Bidding = () => {
   const [title, setTitle] = useState("");
   const [file, setFile] = useState();
   const [uploadImage, setUploadImage] = useState();
+  const [isChecked, setIsChecked] = useState(false);
 
   const changeData = useCallback(
     (e) => {
@@ -309,13 +310,18 @@ const Bidding = () => {
                       id="Transfer-1"
                       name="Transfer"
                       value="Transfer"
-                      required
+                      onChange={(e) => setIsChecked(e.target.checked)}
                     />
                     {/* 여기 동작 추가해야하고.. */}
                     <label className="form-check-label" htmlFor="Transfer-1">
                       최종 입찰하시겠습니까?
                     </label>
                   </div>
+                  {!isChecked && (
+                    <div className="alert alert-warning">
+                      최종 입찰을 위해 체크박스를 선택하세요.
+                    </div>
+                  )}
                   <p className="text-start text-dark">
                     Make your payment directly into our bank account. Please use
                     your Order ID as the payment reference. Your order will not
