@@ -250,10 +250,10 @@ const Bidding = () => {
                   <thead>
                     <tr>
                       <th scope="col"></th>
-                      <th scope="col">제목</th>
-                      <th scope="col">저자</th>
                       <th scope="col">ISBN</th>
-                      <th scope="col">입찰가</th>
+                      <th scope="col">제목</th>
+                      <th scope="col"></th>
+                      <th scope="col">저자</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -279,7 +279,7 @@ const Bidding = () => {
                       </td>
                       <td className="py-5">$69.00</td>
                       <td className="py-5">2</td>
-                      <td className="py-5">$138.00</td>
+                      <td className="py-5"></td>
                       {/* 이쪽 td는 전부 책 검색하고 나서 선택한 결과가 들어갔으면 좋겠음..되려나? */}
                     </tr>
                     <tr>
@@ -342,23 +342,19 @@ const Bidding = () => {
               <br />
               <div className="d-grid gap-2 col-6 mx-auto">
                 <button
-                  className="btn btn-secondary"
+                  className="btn_3"
                   type="button"
                   onClick={() => navigate(`/detail/${product.product_id}`)} //백택사용
                 >
                   취소하기
                 </button>
-                <button
-                  className="btn btn-info"
-                  type="button"
-                  onClick={insertBidding}
-                  style={{ backgroundColor: "#e83e8c" }}
-                >
+                <button className="btn_3" type="button" onClick={insertBidding}>
                   입찰하기
-                  {/* 낙찰페이지 불러오기 콘솔은 찍히는데... 변화가 없다... 
+                </button>
+
+                {/* 낙찰페이지 불러오기 콘솔은 찍히는데... 변화가 없다... 
                   서버로 데이터를 전송하고 페이지 이동하는데.. 
                   서버측 문제??*/}
-                </button>
               </div>
             </div>
           </div>
