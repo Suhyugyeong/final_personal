@@ -18,6 +18,7 @@ const Bidding = () => {
   const [file, setFile] = useState();
   const [uploadImage, setUploadImage] = useState();
   const [isChecked, setIsChecked] = useState(false);
+  const [bidAmount, setBidAbmout] = useState(0);
 
   const changeData = useCallback(
     (e) => {
@@ -26,9 +27,11 @@ const Bidding = () => {
     },
     [product]
   );
-  // const changeData = (e) => {
-  //   setProduct((prevProduct) => ({ ...prevProduct, [e.target.name]: e.target.value }));
-  // };
+
+  const handleBidAmountChange = (e) => {
+    const amount = e.target.value;
+    setBidAbmout(amount);
+  }; //입찰가 업데이트
 
   const insertBidding = async (e) => {
     e.preventDefault();
@@ -152,7 +155,8 @@ const Bidding = () => {
                     type="text"
                     className="form-control"
                     aria-label="Dollar amount (with dot and two decimal places)"
-                    onChange={changeData}
+                    onChange={handleBidAmountChange}
+                    // onChange={changeData}
                   />
                   <span className="input-group-text">₩</span>
                   <span className="input-group-text">WON</span>
@@ -293,7 +297,7 @@ const Bidding = () => {
                       <td className="py-5"></td>
                       <td className="py-5">
                         <div className="py-3 border-bottom border-top">
-                          <p className="mb-0 text-dark">$135.00</p>
+                          <p className="mb-0 text-dark">{bidAmount}</p>
                           {/* 여기도 최종 입찰가를 작성하면 그 값이 여기로 들어갔으면 좋겠음 */}
                         </div>
                       </td>
