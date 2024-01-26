@@ -1,9 +1,8 @@
-//데이터베이스와 상호작용
 const getPool = require("../common/pool");
 
 const sql = {
   detail: "select * from product where product_id = ?", //read
-  detail_auction: "select * from auction where product_id = ?", //여기 추가함
+  detail_auction: "select * from auction where product_id = ?", //detail 안에서 불러오려고
   update:
     "update product set master_price =?, content = ? where product_id = ?", //update
   bidding:

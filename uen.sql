@@ -25,9 +25,12 @@ CREATE TABLE IF NOT EXISTS product ( -- 상품 보드
     email VARCHAR(50) NOT NULL,  -- 사용자 아이디(Foreign Key)
     picture VARCHAR(2048) NULL, -- 사진
     master_price INT NOT NULL, -- 즉시 구매가
+    --이게 후에 detail페이지 즉시구매가에 바로 적용이 돼야함
     auction_id INT NULL, -- 낙찰 아이디
-    endtime DATETIME NOT NULL, -- 경매 종료시간
+    endtime DATETIME NOT NULL, -- 경매 종료시간 
+    --buy페이지에서 넣어야되는데 yyyy-mm-dd hh:mm:ss 형식으로, 이게 나중에 Timer 카운트다운에 들어가야함
 	auction_status CHAR(1) NOT NULL, -- 경매 상태 추후 입력 임시값
+    --이거를 정해야할 것 같음 (상중하를 abc로 대입?)
     isbn VARCHAR(100) NULL, -- 국제책번호
     content VARCHAR(4096) NOT NULL, -- 내용
     cnt INT NULL DEFAULT 0, -- 조회수
@@ -44,7 +47,8 @@ CREATE TABLE IF NOT EXISTS auction ( -- 입찰 보드
     email VARCHAR(50) NOT NULL, -- 입찰자 이메일
     auction_price INT NOT NULL, -- 입찰가
     picture VARCHAR(2048) NULL, -- 사진
-    product_status CHAR(1) NOT NULL, -- 책 상태 추후 정의 필요 (ex: a = 상태 좋음, f = 상태 나쁨) 임시값
+    product_status CHAR(1) NOT NULL, -- 책 상태 
+    --추후 정의 필요 (ex: a = 상태 좋음, f = 상태 나쁨) 임시값
     createAt DATETIME NULL DEFAULT now(), -- 입찰시간
     PRIMARY KEY (auction_id), -- 인식 방법
     FOREIGN KEY (email) REFERENCES users(email), -- FK
@@ -77,7 +81,6 @@ CREATE TABLE IF NOT EXISTS notice_board ( -- 고객센터
 
 insert into product (title, author, isbn, auction_price, picture, product_status, createAt) 
 values ('콜레라시대의사랑','마르케스','1645123456785',40000,'public/upload/이미지파일.jpg','a',now())
--- 이미지파일 불러오는게..
 
 INSERT INTO auction (auction_id, product_id, email, auction_price, product_status, createAt) 
 VALUES (?, 1, "c@c.c", 40000, 'a', now())

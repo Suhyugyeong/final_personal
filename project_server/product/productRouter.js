@@ -41,6 +41,7 @@ router.post("/upload", (req, res, next) => {
       const data = req.body;
       console.log("title", data.title);
       console.log("file", req.file.filename);
+      //여기에
       res.json({ status: 200, message: "OK", data: req.file.filename });
     }
   });
@@ -64,7 +65,8 @@ router.post("/update", function (req, res, next) {
 });
 //404
 
-router.post("/bidding", (req, res, next) => {
+router.post("/bidding", upload.single("file1"), (req, res, next) => {
+  //여기에 일단 upload.single("file1")추가해 봤는데... 똑같음
   console.log("낙찰페이지 불러오기");
   const data = req.body;
   productDAO.bidding(data, (resp) => {
@@ -94,45 +96,5 @@ router.get("/biddingTable/:id", function (req, res, next) {
   });
 });
 //콘솔은 찍힘
-
-//   productDAO.biddingTable((resp) => {
-//     res.json(resp);
-//   });
-// });
-//콘솔 찍힘. 라우터 수정해야할 것 같음... 동일 라우터는 안 됨. 디테일 페이지에서 보여주었으면 좋겠음
-
-// router.get("/", function (req, res) {
-//   res.send("products.ok");
-// });
-
-// router.get("/detail/:id", function (req, res) {
-//   res.send("detail.ok");
-// });
-
-// router.get("/bidding", function (req, res) {
-//   res.send("bidding.ok");
-// });
-
-//multer
-// const storage = multer({
-//   storage: multer.diskStorage({
-//     destination(req, file, done) {
-//       done(null, "uploads/"); //파일은 uploads에 저장될거
-//     },
-//     filename(req, file, done) {
-//       const ext = path.extname(file.originalname);
-//       done(null, path.basename(file.originalname, ext) + Date.now() + ext);
-//     },
-//   }),
-//   limits: { fileSize: 5 * 1024 * 1024 },
-// });
-// const upload = multer({ storage: storage });
-// router.get("/uploads", function (req, res) {
-//   res.render("uploads.ejs");
-// });
-// router.post("/uploads", upload.single("file1"), (req, res) => {
-//   console.log("사진 업로드");
-//   res.send("ok");
-// });
 
 module.exports = router;

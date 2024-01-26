@@ -21,12 +21,13 @@ const Table = (props) => {
           {auctionDatas.map((auction) => (
             <tr key={auction.auction_id}>
               <td>{auction.auction_id}</td>
-              <td>
+              {/* <td>
                 <Link to={`/products/detail/${auction.product_id}`}></Link>
-              </td>
+              </td> */}
+              {/* 상품 상세페이지로 이동하는 링크가 필요없지 않나? */}
               <td>{auction.email}</td>
               <td> {auction.auction_price}</td>
-              <td> {auction.auction_status}</td>
+              <td> {auction.product_status}</td>
               {/* auction_status 잘 찍히는지 확인하기 -DB에서 값을 어떻게 설정할지도... */}
             </tr>
           ))}

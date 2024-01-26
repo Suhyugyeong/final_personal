@@ -24,7 +24,7 @@ app.use(
     origin: "http://localhost:5173",
     credentiials: true,
   })
-); //여기 추가 요청 허용
+); //여기 추가 사진 요청 허용
 
 app.use(express.static(path.join(__dirname, "public")));
 

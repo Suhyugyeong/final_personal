@@ -35,20 +35,25 @@ const Bidding = () => {
 
   const insertBidding = async (e) => {
     e.preventDefault();
-
-    if (!isChecked) {
-      alert("최종 입찰을 위해 반드시 체크박스를 선택해야 합니다.");
-      return;
-    }
+    // if (!isChecked) {
+    //   alert("최종 입찰을 위해 반드시 체크박스를 선택해야 합니다.");
+    //   return;
+    // }
     if (file) {
       const formData = new FormData();
       formData.append("file1", file);
       formData.append("title", title);
+      formData.append("bookInfo", product.isbn);
+      //여기가 api에서 받아온 정보이기 때문에...
+      formData.append("price", product.auction_price);
+      formData.append("status", product.product_status);
+      //여기서 상세내용을 추가하려면 DB에도 추가를 해야되나?
 
       try {
         const response = await axios.post(
           "http://localhost:8000/products/upload", // 이미지 업로드를 처리하는 서버 엔드포인트
-          formData
+          formData,
+          { headers: { "Content-Type": "multipart/form-data" } } //추가함...일단...
         );
 
         if (response.data.status === 200) {
@@ -101,10 +106,8 @@ const Bidding = () => {
       formData.append("file1", file);
       formData.append("title", title);
       formData.append("bookInfo", product.isbn);
-      //여기가 api에서 받아온 정보이기 때문에...
       formData.append("price", product.auction_price);
       formData.append("status", product.product_status);
-      //여기서 상세내용을 추가하려면 DB에도 추가를 해야되나?
       const resp = await axios.post(
         "http://localhost:8000/products/bidding",
         // 여기를 어떻게 수정?
@@ -118,6 +121,7 @@ const Bidding = () => {
       alert("데이터를 입력하지 않았습니다.");
     }
   };
+
   return (
     <div className="container-fluid py-5">
       <div className="container py-5">
@@ -326,7 +330,6 @@ const Bidding = () => {
                       value="Transfer"
                       onChange={(e) => setIsChecked(e.target.checked)}
                     />
-                    {/* 여기 동작 추가해야하고.. */}
                     <label className="form-check-label" htmlFor="Transfer-1">
                       최종 입찰하시겠습니까?
                     </label>
