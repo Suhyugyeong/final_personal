@@ -8,8 +8,6 @@ const sql = {
   bidding:
     "insert into product (title, author, isbn, auction_price, picture, product_status, createAt) values (?,?,?,?,?,?,?)",
   //create
-  biddingTable:
-    "insert into auction (email, auction_price, product_status) values (?, ?, ?)", // update가 아니라 create
 };
 
 const productDAO = {
@@ -49,6 +47,7 @@ const productDAO = {
         item.content,
         item.product_id,
       ]);
+      //detail? buy? 페이지에서 글작성자가 수정할 수 있는 내용
       callback({ status: 200, message: "ok" });
     } catch (error) {
       return { status: 500, message: "게시글 수정 실패", error: error };
@@ -74,24 +73,6 @@ const productDAO = {
       callback({ status: 200, message: "ok", data: resp });
     } catch (error) {
       return { status: 500, message: "입찰 등록 실패", error: error };
-    } finally {
-      if (conn !== null) conn.release();
-    }
-  },
-
-  //biddingTable....여기!
-  biddingTable: async (item, callback) => {
-    let conn = null;
-    try {
-      conn = await getPool().getConnection();
-      const [resp] = await conn.query(sql.biddingTable, [
-        item.email,
-        item.auction_price,
-        item.product_status,
-      ]);
-      callback({ status: 200, message: "ok", data: resp });
-    } catch (error) {
-      return { status: 500, message: "입찰 테이블 조회 실패", error: error };
     } finally {
       if (conn !== null) conn.release();
     }
