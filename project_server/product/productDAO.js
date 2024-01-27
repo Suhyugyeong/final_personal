@@ -5,9 +5,11 @@ const sql = {
   detail_auction: "select * from auction where product_id = ?", //detail 안에서 불러오려고
   update:
     "update product set master_price =?, content = ? where product_id = ?", //update
-  bidding:
-    "insert into product (title, author, isbn, auction_price, picture, product_status, createAt) values (?,?,?,?,?,?,?)",
+  // bidding:
+  //   "insert into product (title, author, isbn, auction_price, picture, product_status, createAt) values (?,?,?,?,?,?,?)",
   //create
+  insertAuction:
+    "INSERT INTO auction (product_id, email, auction_price, picture, product_status) VALUES (?, ?, ?, ?, ?)",
 };
 
 const productDAO = {
@@ -56,23 +58,51 @@ const productDAO = {
     }
   },
 
-  bidding: async (item, callback) => {
+  // bidding: async (item, callback) => {
+  //   let conn = null;
+  //   try {
+  //     conn = await getPool().getConnection();
+  //     const [resp] = await conn.query(sql.bidding, [
+  //       item.title,
+  //       item.author,
+  //       item.isbn,
+  //       item.auction_price,
+  //       item.picture,
+  //       item.product_status,
+  //       item.createAt,
+  //     ]);
+  //     console.log("입찰등록1", resp);
+  //     callback({ status: 200, message: "ok", data: resp });
+  //   } catch (error) {
+  //     return { status: 500, message: "입찰 등록 실패", error: error };
+  //   } finally {
+  //     if (conn !== null) conn.release();
+  //   }
+  // },
+
+  bidding: async (data, file_name, callback) => {
     let conn = null;
     try {
+      const dataObj = JSON.parse(data);
+      console.log("3", dataObj);
+      console.log("4", file_name);
       conn = await getPool().getConnection();
-      const [resp] = await conn.query(sql.bidding, [
-        item.title,
-        item.author,
-        item.isbn,
-        item.auction_price,
-        item.picture,
-        item.product_status,
-        item.createAt,
+      const [result] = await conn.query(sql.insertAuction, [
+        dataObj.product_id,
+        dataObj.email,
+        dataObj.auctionPrice,
+        file_name,
+        dataObj.quality,
+
+        //product_status가 quality가 된거고
       ]);
-      console.log("입찰등록1", resp);
-      callback({ status: 200, message: "ok", data: resp });
-    } catch (error) {
-      return { status: 500, message: "입찰 등록 실패", error: error };
+      if (result) {
+        console.log("5");
+        callback({ status: 200, message: "입찰성공", data: file_name });
+      }
+    } catch (e) {
+      console.log(e);
+      return { status: 500, message: "입찰실패", error: e };
     } finally {
       if (conn !== null) conn.release();
     }
