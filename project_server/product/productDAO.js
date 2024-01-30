@@ -9,7 +9,7 @@ const sql = {
   insertAuction:
     "INSERT INTO auction (product_id, email, auction_price, picture, product_status) VALUES (?, ?, ?, ?, ?)",
   checkBookTitle: "SELECT title, isbn FROM product WHERE product_id = ?",
-  biddingCountDown: "SELECT createAT from product where product_id = ?",
+  biddingCountDown: "SELECT createAt from product where product_id = ?",
 };
 
 const productDAO = {
@@ -94,10 +94,9 @@ const productDAO = {
   biddingCountDown: async (product_id, callback) => {
     let conn = null;
     try {
-      console.log("카운트다운dao");
+      console.log("카운트다운DAO");
       conn = await getPool().getConnection();
       const [result] = await conn.query(sql.biddingCountDown, [product_id]);
-
       if (result !== null && result.length > 0) {
         const createAt = result[0].createAt;
         callback({ status: 200, message: "ok", data: createAt });

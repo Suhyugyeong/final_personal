@@ -116,6 +116,11 @@ export default Timer;
 //     // 컴포넌트 언마운트 시 타이머 제거
 //     return () => clearInterval(timerId);
 //   }, [countdown]);
+//   return (
+//     <div>
+//       <Timer />
+//     </div>
+//   );
 // };
 
 // export default Timer;

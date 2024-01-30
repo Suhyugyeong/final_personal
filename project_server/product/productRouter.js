@@ -79,7 +79,7 @@ router.get("/detail/:id", function (req, res, next) {
     res.json(resp);
   });
 
-  router.get("/detail/:product_id/biddingCountDown", (req, res) => {
+  router.get("/detail/:product_id/biddingCountDown", (req, res, next) => {
     const { product_id } = req.params;
     console.log("카운트다운 불러오기");
     productDAO.biddingCountDown(product_id),
