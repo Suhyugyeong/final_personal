@@ -89,7 +89,12 @@ const Bidding = (props) => {
   return (
     <div className="container-fluid py-5">
       <div className="container py-5">
-        <form id="form" method="post">
+        <form
+          id="form"
+          method="post"
+          action="/upload"
+          encType="multipart/form-data"
+        >
           <div className="row g-5">
             <div className="col-md-12 col-lg-6 col-xl-7">
               <div className="row">
@@ -317,10 +322,13 @@ const Bidding = (props) => {
                     ""
                   )}
                   <p className="text-start text-dark">
-                    경매에 참여한 이후 취소가 불가능합니다. 본 경매는 언제든
-                    구매자의 의사에 따라 중지될 수 있으며, 최종 낙찰 없이 경매가
-                    종료될 수 있습니다.입찰 참여자가 고지한 내용과 다를시 경매
-                    이후 환불이 이루어질 수 있습니다.
+                    경매에 참여한 이후 취소가 불가능합니다. <br />
+                    본 경매는 언제든 구매자의 의사에 따라 중지될 수 있으며, 최종
+                    낙찰 없이 경매가 종료될 수 있습니다.
+                    <br />
+                    입찰 참여자가 고지한 내용과 다를시 경매 이후 환불이 이루어질
+                    수 있습니다.
+                    <br />
                   </p>
                 </div>
               </div>

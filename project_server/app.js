@@ -25,9 +25,7 @@ app.use(
     credentiials: true,
   })
 ); //여기 추가 사진 요청 허용
-
 app.use(express.static(path.join(__dirname, "public")));
-
 app.use(cookieParser("secret@1234"));
 app.use(
   session({
@@ -45,9 +43,9 @@ app.use(
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-//http요청의 body parser(즉 form post요청 => request body에 인코딩된 데이터를 해석하여 req.body에 넣음)
+//http요청의 body parser(즉 form post요청
+//request body에 인코딩된 데이터를 해석하여 req.body에 넣음
 
-// 개발자가 각 파일로 분리시킨 라우터 등록
 app.use("/", homeRouter);
 app.use("/products", productRouter);
 
@@ -63,6 +61,8 @@ app.use((req, res, next) => {
 app.use((err, req, res, next) => {
   res.locals.message = err.message;
   res.locals.error = process.env.NODE_ENV != "production" ? err : {};
+  //현재 실행 환경, 보통 development, 실제 운영중에는 production
+  //개발 환경일 때 참
   res.status(err.status || 500);
   res.render("error"); //error.html
 });

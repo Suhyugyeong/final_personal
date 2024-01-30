@@ -17,30 +17,29 @@ const upload = multer({
   limits: { fileSize: 5 * 1024 * 1024 },
 });
 
-router.post("/upload", async (req, res, next) => {
-  const biddingUpload = upload.single("file1");
+router.post("/upload", upload.single("file1"), async (req, res, next) => {
+  try {
+    const data = {
+      auction_price: req.body.auction_price,
+      product_status: req.body.product_status,
+      detail: req.body.detail,
+      picture: req.file.filename,
+    };
 
-  biddingUpload(req, res, function (err) {
-    if (err instanceof multer.MulterError) {
-      console.log(err);
-      res.json({ status: 500, message: "error" });
-    } else if (err) {
-      console.log(err);
-      res.json({ status: 500, message: "error" });
-    } else {
-      res.json({
-        status: 200,
-        message: "업로드 완료",
-        data: req.file.filename,
-      });
-    }
-  });
+    // productDAO.bidding 함수를 호출하여 데이터를 MySQL의 auction 테이블에 저장
+    productDAO.bidding(data, (resp) => {
+      res.json(resp);
+    });
+  } catch (error) {
+    console.error(error);
+    res.json({ status: 500, message: "에러 발생" });
+  }
 });
 
 router.post("/insert", async (req, res, next) => {
   const data = req.body;
   console.log("00", data);
-  auctionDAO.bidding(data, (resp) => {
+  productDAO.bidding(data, (resp) => {
     res.json(resp);
   });
 });
@@ -53,4 +52,5 @@ router.get("/detail/:id", function (req, res, next) {
     res.json(resp);
   });
 });
+
 module.exports = router;
