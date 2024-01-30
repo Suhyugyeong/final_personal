@@ -167,10 +167,18 @@ const Bidding = (props) => {
               <table className="table">
                 <thead>
                   <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">상</th>
-                    <th scope="col">중</th>
-                    <th scope="col">하</th>
+                    <th scope="col" className="table-info">
+                      상품상태
+                    </th>
+                    <th scope="col" className="table-info">
+                      상
+                    </th>
+                    <th scope="col" className="table-info">
+                      중
+                    </th>
+                    <th scope="col" className="table-info">
+                      하
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -244,11 +252,17 @@ const Bidding = (props) => {
                 <table className="table">
                   <thead>
                     <tr>
-                      <th scope="col"></th>
-                      <th scope="col">ISBN </th>
-                      <th scope="col">제목</th>
-                      <th scope="col"></th>
-                      <th scope="col">저자</th>
+                      <th scope="col" className="table-info"></th>
+                      <th scope="col" className="table-info">
+                        ISBN{" "}
+                      </th>
+                      <th scope="col" className="table-info">
+                        제목
+                      </th>
+                      <th scope="col" className="table-info"></th>
+                      <th scope="col" className="table-info">
+                        저자
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -308,15 +322,15 @@ const Bidding = (props) => {
                     </label>
                   </div>
                   {!isChecked ? (
-                    <div className="alert alert-warning">
+                    <div className="alert alert-danger">
                       최종 입찰을 위해 체크박스를 선택하세요.
                     </div>
                   ) : (
                     ""
                   )}
                   <p className="text-start text-dark">
-                    경매에 참여한 이후 취소가 불가능합니다. <br />
-                    본 경매는 언제든 구매자의 의사에 따라 중지될 수 있으며, 최종
+                    경매에 참여 후 취소가 불가능합니다. <br />
+                    본 경매는 구매자의 의사에 따라 언제든중지될 수 있으며, 최종
                     낙찰 없이 경매가 종료될 수 있습니다.
                     <br />
                     입찰 참여자가 고지한 내용과 다를시 경매 이후 환불이 이루어질

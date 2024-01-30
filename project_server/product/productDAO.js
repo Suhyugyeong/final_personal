@@ -9,6 +9,7 @@ const sql = {
   insertAuction:
     "INSERT INTO auction (product_id, email, auction_price, picture, product_status) VALUES (?, ?, ?, ?, ?)",
   checkBookTitle: "SELECT title, isbn FROM product WHERE product_id = ?",
+  biddingCountDown: "SELECT createAT from product where product_id = ?",
 };
 
 const productDAO = {
@@ -86,6 +87,30 @@ const productDAO = {
     } catch (e) {
       console.log(e);
       return { status: 500, message: "입찰실패", error: e };
+    } finally {
+      if (conn !== null) conn.release();
+    }
+  },
+  biddingCountDown: async (product_id, callback) => {
+    let conn = null;
+    try {
+      console.log("카운트다운dao");
+      conn = await getPool().getConnection();
+      const [result] = await conn.query(sql.biddingCountDown, [product_id]);
+
+      if (result !== null && result.length > 0) {
+        const createAt = result[0].createAt;
+        callback({ status: 200, message: "ok", data: createAt });
+      } else {
+        callback({
+          status: 404,
+          message: "해당 상품을 찾을 수 없습니다.",
+          data: null,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      callback({ status: 500, message: "작성 시간 조회 실패", error: error });
     } finally {
       if (conn !== null) conn.release();
     }

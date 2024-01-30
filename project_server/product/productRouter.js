@@ -78,6 +78,16 @@ router.get("/detail/:id", function (req, res, next) {
     //productDAO.detail 함수의 매개변수로는 객체를 받도록 정의되어 있으니까 객체 안에 담아야함
     res.json(resp);
   });
+
+  router.get("/detail/:product_id/biddingCountDown", (req, res) => {
+    const { product_id } = req.params;
+    console.log("카운트다운 불러오기");
+    productDAO.biddingCountDown(product_id),
+      (result) => {
+        res.status(result.status).json(result);
+        //상품 작성 시간 조회
+      };
+  });
 });
 
 module.exports = router;
