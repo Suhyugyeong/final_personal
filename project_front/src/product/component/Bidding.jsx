@@ -15,10 +15,18 @@ const Bidding = (props) => {
   };
 
   //입찰 데이터 상태
+  // const [data, setData] = useState({
+  //   email: email,
+  //   product_id: product_id,
+  //   isbn: "",
+  //   auctionPrice: 0,
+  //   quality: "",
+  //   additional: "",
+  // });
   const [data, setData] = useState({
-    email: email,
-    product_id: product_id,
-    isbn: "",
+    email: "happy@happy.happy",
+    product_id: 1,
+    isbn: "23541658",
     auctionPrice: 0,
     quality: "",
     additional: "",
@@ -44,29 +52,6 @@ const Bidding = (props) => {
 
   //입력 동기화
   const [finalAuctionPrice, setFinalAuctionPrice] = useState("");
-
-  // 사진 업로드 함수
-  const upload = async (e) => {
-    e.preventDefault();
-    console.log(fileName, file);
-    if (file) {
-      const formData = new FormData();
-      formData.append("file1", file);
-      formData.append("fileName", fileName);
-      const res = await axios.post(
-        "http://localhost:8000/bidding/upload/",
-        formData
-      );
-      if (res.data.status === 200) {
-        setUploadImage(res.data.data);
-        setFileName(res.data.data);
-      } else {
-        console.log(res.data.message);
-      }
-    } else {
-      alert("사진이 첨부되지 않았습니다.");
-    }
-  };
 
   // 입찰하기 함수
   const insertBidding = async (e) => {
@@ -130,10 +115,10 @@ const Bidding = (props) => {
                     required
                     value={data.auctionPrice}
                     // onChange={changeData}
-                    onChange={(e) => {
-                      changeData(e);
-                      setFinalAuctionPrice(e.target.value);
-                    }}
+                    // onChange={(e) => {
+                    //   changeData(e);
+                    //   setFinalAuctionPrice(e.target.value);
+                    // }}
                   />
                   <span className="input-group-text">₩</span>
                   <span className="input-group-text">WON</span>
@@ -167,18 +152,10 @@ const Bidding = (props) => {
               <table className="table">
                 <thead>
                   <tr>
-                    <th scope="col" className="table-info">
-                      상품상태
-                    </th>
-                    <th scope="col" className="table-info">
-                      상
-                    </th>
-                    <th scope="col" className="table-info">
-                      중
-                    </th>
-                    <th scope="col" className="table-info">
-                      하
-                    </th>
+                    <th scope="col">#</th>
+                    <th scope="col">상</th>
+                    <th scope="col">중</th>
+                    <th scope="col">하</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -252,17 +229,11 @@ const Bidding = (props) => {
                 <table className="table">
                   <thead>
                     <tr>
-                      <th scope="col" className="table-info"></th>
-                      <th scope="col" className="table-info">
-                        ISBN{" "}
-                      </th>
-                      <th scope="col" className="table-info">
-                        제목
-                      </th>
-                      <th scope="col" className="table-info"></th>
-                      <th scope="col" className="table-info">
-                        저자
-                      </th>
+                      <th scope="col"></th>
+                      <th scope="col">ISBN </th>
+                      <th scope="col">제목</th>
+                      <th scope="col"></th>
+                      <th scope="col">저자</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -322,15 +293,15 @@ const Bidding = (props) => {
                     </label>
                   </div>
                   {!isChecked ? (
-                    <div className="alert alert-danger">
+                    <div className="alert alert-warning">
                       최종 입찰을 위해 체크박스를 선택하세요.
                     </div>
                   ) : (
                     ""
                   )}
                   <p className="text-start text-dark">
-                    경매에 참여 후 취소가 불가능합니다. <br />
-                    본 경매는 구매자의 의사에 따라 언제든중지될 수 있으며, 최종
+                    경매에 참여한 이후 취소가 불가능합니다. <br />
+                    본 경매는 언제든 구매자의 의사에 따라 중지될 수 있으며, 최종
                     낙찰 없이 경매가 종료될 수 있습니다.
                     <br />
                     입찰 참여자가 고지한 내용과 다를시 경매 이후 환불이 이루어질
