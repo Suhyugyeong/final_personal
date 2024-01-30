@@ -5781,3 +5781,19 @@ readers do not read off random characters that represent icons */
   font-size: 0.35em;
   font-weight: 100;
 }
+
+/* 상품 품질 등급 안내 */
+.productStatus {
+  background-color: lightgray;
+  /* border: 1px black solid; */
+  color: white;
+  width: 200px;
+  height: 200px;
+  display: inline-block;
+  padding: 20px;
+  margin: 5px;
+}
+
+.form-label {
+  color: #e83e8c;
+}

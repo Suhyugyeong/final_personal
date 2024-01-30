@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 //Bidding 페이지에서 입력받은 값을 Table에 전달해야 되는데..
 
 const Bidding = (props) => {
+  console.log(props);
   const navigate = useNavigate();
   const product_id = 9; // props.product_id ==> props로 상품id 받아오기
   const email = "kim@a.com"; // 전역상태값에서 받아오기.
@@ -37,9 +38,16 @@ const Bidding = (props) => {
   const [bookPrice, setBookPrice] = useState("");
   const [bookImg, setBookImg] = useState("");
 
+  //입력 동기화
+  const [finalAuctionPrice, setFinalAuctionPrice] = useState("");
+
   // 사진 업로드 함수
   const upload = async (e) => {
     e.preventDefault();
+    if (!isChecked) {
+      alert("최종 입찰을 위해 반드시 체크박스를 선택해야 합니다.");
+      return;
+    }
     console.log(fileName, file);
     if (file) {
       const formData = new FormData();
@@ -78,33 +86,6 @@ const Bidding = (props) => {
     }
   };
 
-  // 입찰하기 함수
-  // const insertBidding = async (e) => {
-  //   e.preventDefault();
-
-  //   if(file){
-  //     const formData = new FormData();
-  //     formData.append('file1', file)
-  //     formData.append('title', title)
-  //     const inputData = JSON.stringify(data) // 입찰데이터를 string화
-  //     formData.append('inputData', inputData)
-
-  //     const response = await axios.post("http://localhost:8000/auction/insert", formData);
-  //     if (response.data.status === 200) {
-  //       window.alert(response.data.message)
-  //       setUploadImage(response.data.data.file_name)
-  //       {/* 0127 추가 */}
-  //       setBookTitle(response.data.data.title)
-  //       setBookIsbn(response.data.data.isbn)
-  //       setBookPrice(response.data.data.auction_price)
-  //     } else {
-  //       console.error("입찰 실패");
-  //     }
-  //   } else {
-  //     alert('사진이 첨부되지 않았습니다.')
-  //   }
-  // };
-
   return (
     <div className="container-fluid py-5">
       <div className="container py-5">
@@ -128,12 +109,17 @@ const Bidding = (props) => {
                     name="auctionPrice"
                     id="auctionPrice"
                     value={data.auctionPrice}
-                    onChange={changeData}
+                    // onChange={changeData}
+                    onChange={(e) => {
+                      changeData(e);
+                      setFinalAuctionPrice(e.target.value);
+                    }}
                   />
                   <span className="input-group-text">₩</span>
                   <span className="input-group-text">WON</span>
                 </div>
               </div>
+              <br />
               <div className="form-item">
                 <label className="form-label my-3">
                   품질등급 <sup>*</sup>
@@ -154,6 +140,67 @@ const Bidding = (props) => {
                 </select>
               </div>
 
+              <br />
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">상</th>
+                    <th scope="col">중</th>
+                    <th scope="col">하</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row"> 변색, 얼룩, 해짐</th>
+                    <td>없음</td>
+                    <td>있음</td>
+                    <td>있음</td>
+                  </tr>
+                  <tr>
+                    <th scope="row"> 낙서, 낙장, 찢어짐</th>
+                    <td>없음</td>
+                    <td>없음</td>
+                    <td>있음</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">사용감</th>
+                    <td>없음</td>
+                    <td>있음</td>
+                    <td>있음</td>
+                  </tr>
+                </tbody>
+              </table>
+              {/* <div className="productStatus">
+                <h5>상</h5>
+                <br />
+                변색, 얼룩, 해짐 없음
+                <br />
+                낙서, 낙장, 찢어짐 없음
+                <br />
+                사용감 없음
+                <br />
+              </div>
+              <div className="productStatus">
+                <h5>중</h5>
+                <br />
+                변색, 얼룩, 해짐 있음
+                <br />
+                낙서, 낙장, 찢어짐 없음
+                <br />
+                사용감 있음
+                <br />
+              </div>
+              <div className="productStatus">
+                <h5>하</h5>
+                <br />
+                변색, 얼룩, 해짐 있음
+                <br />
+                낙서, 낙장, 찢어짐 있음
+                <br />
+                사용감 있음
+                <br />
+              </div> */}
               <div className="form-item">
                 <label className="form-label my-3">
                   사진첨부<sup>*</sup>
@@ -237,7 +284,9 @@ const Bidding = (props) => {
                       <td className="py-5"></td>
                       <td className="py-5">
                         <div className="py-3 border-bottom border-top">
-                          <p className="mb-0 text-dark">{bookPrice} 원</p>
+                          <p className="mb-0 text-dark">
+                            {finalAuctionPrice} 원
+                          </p>
                         </div>
                       </td>
                     </tr>
@@ -253,7 +302,8 @@ const Bidding = (props) => {
                       id="isChecked"
                       name="isChecked"
                       value={isChecked}
-                      onChange={() => setIsChecked(!isChecked)}
+                      // onChange={() => setIsChecked(!isChecked)}
+                      onChange={(e) => setIsChecked(e.target.checked)}
                     />
                     <label className="form-check-label" htmlFor="isChecked">
                       최종 입찰하시겠습니까?
@@ -267,18 +317,10 @@ const Bidding = (props) => {
                     ""
                   )}
                   <p className="text-start text-dark">
-                    Make your payment directly into our bank account. Please use
-                    your Order ID as the payment reference. Your order will not
-                    be shipped until the funds have cleared in our account. Make
-                    your payment directly into our bank account. Please use your
-                    Order ID as the payment reference. Your order will not be
-                    shipped until the funds have cleared in our account. Make
-                    your payment directly into our bank account. Please use your
-                    Order ID as the payment reference. Your order will not be
-                    shipped until the funds have cleared in our account. Make
-                    your payment directly into our bank account. Please use your
-                    Order ID as the payment reference. Your order will not be
-                    shipped until the funds have cleared in our account.
+                    경매에 참여한 이후 취소가 불가능합니다. 본 경매는 언제든
+                    구매자의 의사에 따라 중지될 수 있으며, 최종 낙찰 없이 경매가
+                    종료될 수 있습니다.입찰 참여자가 고지한 내용과 다를시 경매
+                    이후 환불이 이루어질 수 있습니다.
                   </p>
                 </div>
               </div>
