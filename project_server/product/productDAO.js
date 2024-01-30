@@ -61,15 +61,15 @@ const productDAO = {
       console.log("1", data);
       conn = await getPool().getConnection();
       const [result] = await conn.query(sql.insertAuction, [
-        data.auctionInfo.product_id,
-        data.auctionInfo.email,
-        data.auctionInfo.auctionPrice,
+        data.product_id,
+        data.email,
+        data.auction_price,
         data.picture,
-        data.auctionInfo.quality,
+        data.product_status,
       ]);
       if (result) {
         const [bookInfo] = await conn.query(sql.checkBookTitle, [
-          data.auctionInfo.product_id,
+          data.product_id,
         ]); //insert성공하면 책 정보를 db에서 조회, bookinfo에 결과 할당하기
         console.log("5", bookInfo);
         callback({
@@ -77,7 +77,7 @@ const productDAO = {
           message: "입찰성공",
           data: {
             file_name: data.picture,
-            auction_price: data.auctionInfo.auctionPrice,
+            auction_price: data.auction_price,
             title: bookInfo[0].title,
             isbn: bookInfo[0].isbn,
           }, //경매삽입, 책정보조회 성공하면 성공 응답 전송

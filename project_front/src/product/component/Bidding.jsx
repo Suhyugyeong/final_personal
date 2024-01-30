@@ -1,13 +1,18 @@
 import axios from "axios";
 import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
-//Bidding 페이지에서 입력받은 값을 Table에 전달해야 되는데..
+import PropTypes from "prop-types"; //prop-types install
 
 const Bidding = (props) => {
   console.log(props);
   const navigate = useNavigate();
-  const product_id = 9; // props.product_id ==> props로 상품id 받아오기
-  const email = "kim@a.com"; // 전역상태값에서 받아오기.
+  const { product_id } = props;
+  const { email } = props;
+
+  Bidding.propTypes = {
+    product_id: PropTypes.number.isRequired,
+    email: PropTypes.string.isRequired,
+  };
 
   //입찰 데이터 상태
   const [data, setData] = useState({
@@ -19,7 +24,6 @@ const Bidding = (props) => {
     additional: "",
   });
 
-  // controlled data
   const changeData = useCallback((e) => {
     setData((data) => ({ ...data, [e.target.name]: e.target.value }));
   }, []);
@@ -44,17 +48,13 @@ const Bidding = (props) => {
   // 사진 업로드 함수
   const upload = async (e) => {
     e.preventDefault();
-    if (!isChecked) {
-      alert("최종 입찰을 위해 반드시 체크박스를 선택해야 합니다.");
-      return;
-    }
     console.log(fileName, file);
     if (file) {
       const formData = new FormData();
       formData.append("file1", file);
       formData.append("fileName", fileName);
       const res = await axios.post(
-        "http://localhost:8000/auction/upload/",
+        "http://localhost:8000/bidding/upload/",
         formData
       );
       if (res.data.status === 200) {
@@ -71,18 +71,32 @@ const Bidding = (props) => {
   // 입찰하기 함수
   const insertBidding = async (e) => {
     e.preventDefault();
-    const res = await axios.post("http://localhost:8000/auction/insert", {
-      auctionInfo: data,
-      picture: fileName,
-    });
-    if (res.data.status === 200) {
-      console.log(res.data);
-      setBookTitle(res.data.data.title);
-      setBookIsbn(res.data.data.isbn);
-      setBookPrice(res.data.data.auction_price);
-      setBookImg(res.data.data.file_name);
-    } else {
-      console.error("입찰 실패");
+    if (!isChecked) {
+      alert("최종 입찰을 위해 반드시 체크박스를 선택해야 합니다.");
+      return;
+    }
+    if (file) {
+      //파일업로드는 항상 FormData 로 구성해서 서버에 전달해야..
+      const formData = new FormData();
+      formData.append("file1", file);
+      console.log("넘어가는 data 확인", data, file);
+      //FormData 로 json 을 넘기려면 문자열로 바꾸어서 넘겨야 한다.
+      const strData = JSON.stringify(data);
+      formData.append("sendData", strData);
+      //파일 업로드는 꼭 post 방식을 이용해야..
+      const res = await axios.post(
+        "http://localhost:8000/products/bidding/insert",
+        formData
+      );
+      if (res.data.status === 200) {
+        console.log(res.data);
+        setBookTitle(res.data.data.title);
+        setBookIsbn(res.data.data.isbn);
+        setBookPrice(res.data.data.auction_price);
+        setBookImg(res.data.data.file_name);
+      } else {
+        console.error("입찰 실패");
+      }
     }
   };
 
@@ -91,8 +105,8 @@ const Bidding = (props) => {
       <div className="container py-5">
         <form
           id="form"
-          method="post"
-          action="/upload"
+          // method="post"
+          // action="/upload"
           encType="multipart/form-data"
         >
           <div className="row g-5">
@@ -113,6 +127,7 @@ const Bidding = (props) => {
                     aria-label="Dollar amount (with dot and two decimal places)"
                     name="auctionPrice"
                     id="auctionPrice"
+                    required
                     value={data.auctionPrice}
                     // onChange={changeData}
                     onChange={(e) => {
@@ -137,8 +152,11 @@ const Bidding = (props) => {
                   id="quality"
                   value={data.quality}
                   onChange={changeData}
+                  required
                 >
-                  <option>품질을 선택해주세요.</option>
+                  <option value="" disabled hidden>
+                    품질을 선택해주세요.
+                  </option>
                   <option value="1">상</option>
                   <option value="2">중</option>
                   <option value="3">하</option>
@@ -176,40 +194,11 @@ const Bidding = (props) => {
                   </tr>
                 </tbody>
               </table>
-              {/* <div className="productStatus">
-                <h5>상</h5>
-                <br />
-                변색, 얼룩, 해짐 없음
-                <br />
-                낙서, 낙장, 찢어짐 없음
-                <br />
-                사용감 없음
-                <br />
-              </div>
-              <div className="productStatus">
-                <h5>중</h5>
-                <br />
-                변색, 얼룩, 해짐 있음
-                <br />
-                낙서, 낙장, 찢어짐 없음
-                <br />
-                사용감 있음
-                <br />
-              </div>
-              <div className="productStatus">
-                <h5>하</h5>
-                <br />
-                변색, 얼룩, 해짐 있음
-                <br />
-                낙서, 낙장, 찢어짐 있음
-                <br />
-                사용감 있음
-                <br />
-              </div> */}
               <div className="form-item">
                 <label className="form-label my-3">
                   사진첨부<sup>*</sup>
                 </label>
+
                 <div className="mb-3">
                   <input
                     type="text"
@@ -223,29 +212,32 @@ const Bidding = (props) => {
                     onChange={(e) => setFile(e.target.files[0])}
                   />
                 </div>
+                {/* <button onClick={upload}>업로드</button> */}
               </div>
-
+              {uploadImage ? (
+                <img src={`http://localhost:8000/upload/${uploadImage}`} />
+              ) : (
+                ""
+              )}
               <br />
 
               <div className="form-item">
                 <label className="form-label my-3">
                   상세내용(선택사항)<sup></sup>
                 </label>
-                <div className="form-item">
-                  <textarea
-                    className="form-control"
-                    spellCheck="false"
-                    cols="30"
-                    rows="11"
-                    placeholder="제품 상세 내용"
-                    name="additional"
-                    id="additional"
-                    value={data.additional}
-                    onChange={changeData}
-                  ></textarea>
-                </div>
+
+                <textarea
+                  className="form-control"
+                  spellCheck="false"
+                  cols="30"
+                  rows="11"
+                  placeholder="제품 상세 내용"
+                  name="additional"
+                  id="additional"
+                  value={data.additional}
+                  onChange={changeData}
+                ></textarea>
               </div>
-              <div className="form-check my-3"></div>
             </div>
             <div className="col-md-12 col-lg-6 col-xl-5">
               <div className="table-responsive">
@@ -263,14 +255,14 @@ const Bidding = (props) => {
                     <tr>
                       <td scope="row">
                         <div className="d-flex align-items-center mt-2">
-                          {/* {bookImg ? (
+                          {bookImg ? (
                             <img
                               src={`http://localhost:8000/upload/${bookImg}`}
                               style={{ width: "100px" }}
                             />
                           ) : (
                             ""
-                          )} */}
+                          )}
                         </div>
                       </td>
                       <td className="py-5">{bookIsbn}</td>
@@ -289,6 +281,7 @@ const Bidding = (props) => {
                       <td className="py-5"></td>
                       <td className="py-5">
                         <div className="py-3 border-bottom border-top">
+                          <p className="mb-0 text-dark">{bookPrice}</p>
                           <p className="mb-0 text-dark">
                             {finalAuctionPrice} 원
                           </p>
