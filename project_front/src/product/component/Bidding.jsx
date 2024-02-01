@@ -293,7 +293,7 @@ const Bidding = (props) => {
                     </label>
                   </div>
                   {!isChecked ? (
-                    <div className="alert alert-warning">
+                    <div className="alert alert-danger">
                       최종 입찰을 위해 체크박스를 선택하세요.
                     </div>
                   ) : (

@@ -41,6 +41,9 @@ const Detail = () => {
     minuts: 0,
     seconds: 0,
   });
+
+  const [countDownFinished, setCountDownFinished] = useState(false); //disbled 속성 추가
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -51,6 +54,12 @@ const Detail = () => {
         const { endtime } = response.data.countdown;
         console.log("endtime...", endtime);
         setCountdownData(endtime);
+
+        //disbled 속성 추가
+        const currentTime = new Date().getTime();
+        if (currentTime > endtime) {
+          setCountDownFinished(true);
+        }
       } catch (error) {
         console.error("타이머 불러들이기 실패", error);
       }
@@ -93,7 +102,9 @@ const Detail = () => {
                   className="btn_3"
                   // onClick={() => navigate(`/products/bidding/${product_id}`
                   onClick={() => navigate("/products/bidding/")}
+                  disabled={countDownFinished}
                 >
+                  {/* disabled 속성 추가 */}
                   판매입찰하기
                 </button>
                 <br />
