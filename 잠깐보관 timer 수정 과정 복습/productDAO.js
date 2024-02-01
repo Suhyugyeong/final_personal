@@ -100,6 +100,17 @@ const productDAO = {
 
       if (result.length > 0) {
         console.log("000", result[0].createAt);
+        // t = result[0].createAt.split(/[- :]/);
+
+        // //when t[3], t[4] and t[5] are missing they defaults to zero
+        // result = new Date(
+        //   t[0],
+        //   t[1] - 1,
+        //   t[2],
+        //   t[3] || 0,
+        //   t[4] || 0,
+        //   t[5] || 0
+        // );
 
         const createdAt = new Date(result[0].createAt);
         console.log("createdAt", createdAt);
@@ -111,6 +122,23 @@ const productDAO = {
         const timeRemaining = biddingDate - currentDate;
         console.log(biddingDate, currentDate, timeRemaining);
         //밀리초
+
+        // const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24)); //1초 1000밀리초
+        // const hours = Math.floor(
+        //   (timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        // );
+        // const minutes = Math.floor(
+        //   (timeRemaining % (1000 * 60 * 60)) / (1000 * 60)
+        // );
+        // const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+        // console.log(days, hours, minutes, seconds);
+
+        // callback({
+        //   status: 200,
+        //   message: "타이머 정보 가져오기 완료",
+        //   countdown: { timeRemaining, days, hours, minutes, seconds },
+        // });
 
         callback({
           status: 200,

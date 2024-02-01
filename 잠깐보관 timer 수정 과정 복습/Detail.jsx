@@ -25,10 +25,11 @@ const Detail = () => {
   });
 
   const getDetail = async () => {
+    // console.log("1111", product_id);
     const resp = await axios.get(
       "http://localhost:8000/products/detail/" + product_id
     );
-
+    // console.log(resp.data.data[0]);
     setProduct(resp.data.data[0]);
   };
   useEffect(() => {

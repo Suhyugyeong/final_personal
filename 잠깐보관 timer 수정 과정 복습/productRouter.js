@@ -45,7 +45,18 @@ router.post("/bidding/insert", async (req, res, next) => {
   });
 });
 
+// router.get("/detail/:id", function (req, res, next) {
+//   console.log("디테일 불러오기");
+//   const productId = req.params.id;
+//   productDAO.detail({ product_id: productId }, (detailResp) => {
+//     productDAO.timer(productId, (timerResp) => {
+//       req.json({ detail: detailResp, timer: timerResp });
+//     });
+//   });
+// });
+
 router.get("/detail/:id", function (req, res, next) {
+  //내가 왜 !!! 이 라우터를 http://localhost:8000 이런 식으로 작성했을까?
   console.log("디테일 불러오기");
   const id = req.params.id;
   productDAO.detail({ product_id: id }, (resp) => {
