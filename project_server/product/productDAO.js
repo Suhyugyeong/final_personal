@@ -9,6 +9,7 @@ const sql = {
   insertAuction:
     "INSERT INTO auction (product_id, email, auction_price, picture, product_status) VALUES (?, ?, ?, ?, ?)",
   checkBookTitle: "SELECT title, isbn FROM product WHERE product_id = ?",
+  biddingCountDown: "SELECT createAt from product WHERE product_id = ?",
 };
 
 const productDAO = {
@@ -86,6 +87,51 @@ const productDAO = {
     } catch (e) {
       console.log(e);
       return { status: 500, message: "입찰실패", error: e };
+    } finally {
+      if (conn !== null) conn.release();
+    }
+  },
+
+  timer: async (productId, callback) => {
+    let conn = null;
+    try {
+      conn = await getPool().getConnection();
+      const [result] = await conn.query(sql.biddingCountDown, [productId]);
+
+      if (result.length > 0) {
+        const createdAt = new Date(result[0].createdAt);
+        const currentDate = new Date();
+        const biddingDate = new Date(createdAt);
+        //문자열 데이터 객체로 변화하고
+        biddingDate.setDate(biddingDate.getDate() + 7);
+
+        const timeRemaining = biddingDate - currentDate;
+        //밀리초
+
+        const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+        const hours = Math.floor(
+          (timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
+        const minutes = Math.floor(
+          (timeRemaining % (1000 * 60 * 60)) / (1000 * 60)
+        );
+        const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+        callback({
+          status: 200,
+          message: "타이머 정보 가져오기 완료",
+          countdown: { days, hours, minutes, seconds },
+        });
+      } else {
+        callback({ status: 404, message: "상품을 찾을 수 없습니다." });
+      }
+    } catch (error) {
+      console.error("타이머 정보 가져오기 실패", error);
+      callback({
+        status: 500,
+        message: "타이머 정보 가져오기 실패",
+        error: error,
+      });
     } finally {
       if (conn !== null) conn.release();
     }

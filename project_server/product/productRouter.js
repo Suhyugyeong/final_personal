@@ -2,6 +2,7 @@ const express = require("express");
 const productDAO = require("./productDAO");
 const multer = require("multer");
 const path = require("path");
+const { func } = require("prop-types");
 const router = express.Router();
 
 const upload = multer({
@@ -50,6 +51,14 @@ router.get("/detail/:id", function (req, res, next) {
   productDAO.detail({ product_id: id }, (resp) => {
     //productDAO.detail 함수의 매개변수로는 객체를 받도록 정의되어 있으니까 객체 안에 담아야함
     res.json(resp);
+  });
+
+  router.get("/detail/:id/biddingCountDown", function (req, res, next) {
+    console.log("작성시간 가져오기");
+    const productId = req.params.id; // req.params.id를 productId에 저장
+    productDAO.timer(productId, (resp) => {
+      res.json(resp);
+    });
   });
 });
 

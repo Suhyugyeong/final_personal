@@ -22,19 +22,31 @@ const Detail = () => {
     createAt: "",
     auctions: [],
     // 여기 Table의 auctions
+    backendCountdown: null,
+    //카운트다운하고 disabled 넣고 싶음
   });
-  const getDetail = async () => {
-    // console.log("1111", product_id);
-    const resp = await axios.get(
-      "http://localhost:8000/products/detail/" + product_id
-    );
-    // console.log(resp.data.data[0]);
-    setProduct(resp.data.data[0]);
-  };
   useEffect(() => {
+    const getDetail = async () => {
+      try {
+        const resp = await axios.get(
+          `http://localhost:8000/products/detail/${product_id}`
+        );
+        setProduct(resp.data.data[0]);
+      } catch (error) {
+        console.error("상품 정보를 가져오는 데 실패했습니다.", error);
+      }
+    };
     getDetail();
-  }, []);
+  }, [product_id]);
 
+  // const handleBidButtonClick = () => async ()=>{
+  //   try{
+  //     navigate('/products/bidding')
+  //   }catch(error){
+  //     console.error('경매 중 오류 발생', error)
+  //   }
+  }
+ 
   return (
     <div>
       <div className="product_image_area section_padding">
@@ -64,12 +76,15 @@ const Detail = () => {
                 {/* p태그에 라인 있음 */}
                 <h3>낙찰까지 남은 시간</h3>
                 <Timer />
+                <Timer countdown={product.backendCountdown} />
                 <br />
                 <br />
                 <button
                   className="btn_3"
                   // onClick={() => navigate(`/products/bidding/${product_id}`
-                  onClick={() => navigate("/products/bidding/")}
+                  onClick={handleBidButtonClick}
+                  disabled={!product.backendCountdown}
+                  // onClick={() => navigate("/products/bidding/")}
                 >
                   판매입찰하기
                 </button>
