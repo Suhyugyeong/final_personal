@@ -1,15 +1,17 @@
+//detail에 넣어야 할 것 같음...
+//아니면 detail에서 update로 props 를 전달하고..? 넘긴다?
+
 import axios from "axios";
 import React, { useCallback, useState, useEffect, useContext } from "react";
-import { useNavigate, useParams, Link } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import UserContext from "../../UserContext";
 
 const Update = () => {
   const navigate = useNavigate();
 
-  //글쓴이인지 확인을 해야함
-  const context = useContext(UserContext)
+  const context = useContext(UserContext);
   //글쓴이 인지 확인하기 위한 코드는??
-  const writtenUser = context.state.userData.//여기에 글쓴이인지를 파악하려면?
+  const loggedInUserEmail = context.state.userData.eamil;
 
   const { product_id } = useParams();
   //해당 url에서 product_id 받아올거고
@@ -43,6 +45,37 @@ const Update = () => {
     //서버에서 json 형식으로 데이터를 받기를..
     navigate("product/detail/" + product_id);
   };
-  return <h1>buypage랑 같은 html이 들어가야 함 </h1>;
+
+  if (resp.data.data.email !== loggedInUserEmail) {
+    //권한이 없으면 다른페이지로 이동
+    navigate("/unAuthorizedPage");
+  }
+
+  useEffect(() => {
+    getData();
+  }, [loggedInUserEmail, navigate, product_id]);
+
+  const DetailUpdate = async (e) => {
+    await axios.posst("http://localhost:8000/products/update/" + product_id, {
+      product,
+    });
+    navigate("product/detail/" + product_id);
+  };
+
+  return (
+    <div>
+      {/* 수정 페이지의 HTML 렌더링을 추가 */}
+      <h1>수정 페이지</h1>
+      {/* 예시로 수정 내용의 input을 추가 */}
+      <input
+        type="text"
+        name="content"
+        value={product.content}
+        onChange={changeData}
+      />
+      {/* 수정 버튼 클릭 시 detailUpdate 함수 호출 */}
+      <button onClick={detailUpdate}>수정</button>
+    </div>
+  );
 };
 export default Update;
