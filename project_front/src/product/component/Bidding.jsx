@@ -72,6 +72,7 @@ const Bidding = (props) => {
       const res = await axios.post(
         "http://localhost:8000/products/bidding/insert",
         formData
+        //여기에 '입찰 성공' alert 메뉴를 넣어야 하나??
       );
       if (res.data.status === 200) {
         console.log(res.data);
@@ -324,7 +325,7 @@ const Bidding = (props) => {
                 <button className="btn_3" type="button" onClick={insertBidding}>
                   입찰하기
                 </button>
-                {/* 여기도 navigate 넣어서 detail화면으로 돌아가기?? */}
+                {/* 여기도 navigate 넣어서 detail화면으로 돌아가기?? 근데 onClick이 두 번이...?*/}
               </div>
             </div>
           </div>
