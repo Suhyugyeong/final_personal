@@ -1,4 +1,4 @@
-//전역 상태 관리
+//contextAPI로 전역 상태 관리
 //하위 컴포넌트에 전달하기 위한 userProvider 컴포넌트와 이를 사용하기 위해 userContext를 정의
 
 import React, { useState, useEffect } from "react";
@@ -8,8 +8,8 @@ import PropTypes from "prop-types";
 // contextAPI 사용해서 전역 상태를 관리하기 위한 context 객체 생성
 const UserContext = React.createContext(null);
 
-// 전역 상태 및 상태 변경 함수 제공
-//props.children에 UserProvider로 감싸진 모든 하위 컴포넌트가 포함
+// userProvider가 useContext를 사용해서 전역 상태 관리하기 위한 context객체 생성
+//userProvider가 props.children을 통해 감싸진 하위 컴포넌트에 전역 상태 제공
 export const UserProvider = (props) => {
   const [userData, setUserData] = useState({ email: "", user_name: "" });
 
@@ -23,6 +23,7 @@ export const UserProvider = (props) => {
     }
   }, []);
 
+  //사용자 정보 받아서
   const loginUser = (user) => {
     setUserData({ email: user.email, user_name: user.user_name });
   };
@@ -32,7 +33,6 @@ export const UserProvider = (props) => {
     setUserData({ email: "", user_name: "" });
   };
 
-  // 자신들이 가지고 있는 상태 데이터,상태변경함수 등을 하위에 공개하기 위해서 context에 추가할 정보??
   const values = {
     state: { userData },
     action: { loginUser, logoutUser },
@@ -40,12 +40,14 @@ export const UserProvider = (props) => {
 
   //userProvider 컴포넌트가 userContext.Provider로 감싸져 있음
   //이를 통해 하위 컴포넌트가 userContext값을 사용할 수 있음
+  // userProvider의 value 속성에 현재 전역 상태와 상태 변경 함수가 포함된 values 객체가 설정
   return (
     <UserContext.Provider value={values}>{props.children}</UserContext.Provider>
   );
 };
 
 //propTypes를 사용한 자식 노드 확인하고 userProvider 컴포넌에 children이라는 속성이 필요(노드형태로 전달해야)
+//useProvider사용할 때 children이 반드시 전달되어야 함
 UserProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };

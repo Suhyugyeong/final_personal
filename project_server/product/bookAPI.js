@@ -14,8 +14,11 @@ router.get("/search", async function (req, res, next) {
     console.log(response.status);
     const doc = new dom().parseFromString(response.data, "text/xml");
     const nodes = xpath.select("/root/result/item", doc);
+    //XML문서에서 원하는 데이터 추출 =>JSON형태로 전달
+    //각 노드에서 title_info와 id값 추출
     const result = [];
     for (i = 0; i < nodes.length; i++) {
+      //XML노드의 배열
       var title_node = xpath.select("title_info", nodes[i]);
       const title = title_node[0].firstChild.data;
       var id_node = xpath.select("id", nodes[i]);
