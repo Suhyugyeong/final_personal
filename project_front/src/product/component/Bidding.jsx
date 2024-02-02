@@ -113,7 +113,7 @@ const Bidding = (props) => {
                     name="auctionPrice"
                     id="auctionPrice"
                     required
-                    value={data.auctionPrice}
+                    defaultValue={data.auctionPrice} //0202 defaultValue로 수정 원래 value
                     // onChange={changeData}
                     // onChange={(e) => {
                     //   changeData(e);
@@ -188,7 +188,7 @@ const Bidding = (props) => {
                   <input
                     type="text"
                     name="fileName"
-                    value={fileName}
+                    defaultValue={fileName}
                     onChange={(e) => setFileName(e.target.value)}
                   />
                   <input
@@ -284,7 +284,7 @@ const Bidding = (props) => {
                       className="form-check-input"
                       id="isChecked"
                       name="isChecked"
-                      value={isChecked}
+                      defaultValue={isChecked}
                       // onChange={() => setIsChecked(!isChecked)}
                       onChange={(e) => setIsChecked(e.target.checked)}
                     />

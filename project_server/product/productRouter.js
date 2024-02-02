@@ -62,4 +62,12 @@ router.get("/timer/:id", function (req, res, next) {
   });
 });
 
+router.post("/update", function (req, res, next) {
+  const data = req.body;
+  console.log("게시글 수정하기");
+  productDAO.update(data, (resp) => {
+    res.json(resp);
+  });
+}); //0202 추가
+
 module.exports = router;
