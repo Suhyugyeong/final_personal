@@ -317,12 +317,14 @@ const Bidding = (props) => {
                   className="btn_3"
                   type="button"
                   onClick={() => navigate(`/detail/${product_id}`)}
+                  //이게 왜 안 될까요??
                 >
                   취소하기
                 </button>
                 <button className="btn_3" type="button" onClick={insertBidding}>
                   입찰하기
                 </button>
+                {/* 여기도 navigate 넣어서 detail화면으로 돌아가기?? */}
               </div>
             </div>
           </div>
