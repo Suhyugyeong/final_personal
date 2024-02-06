@@ -1,6 +1,3 @@
-//0202 수정
-//detail에 넣어야 할 것 같음...
-//아니면 detail에서 update로 props 를 전달하고..? 넘긴다?
 import axios from "axios";
 import React, { useCallback, useState, useEffect, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -10,7 +7,6 @@ const Update = () => {
   const navigate = useNavigate();
   const context = useContext(UserContext);
   const loggedInUserEmail = context.state.userData.email;
-  //현재 로그인한 사용자 이메일
   const { product_id } = useParams();
   const [product, setProduct] = useState({
     master_price: "",
@@ -40,7 +36,7 @@ const Update = () => {
   };
 
   useEffect(() => {
-    getData(); //의존성 배열 변수가 함수 스코프 밖에서 정의되었다?
+    getData();
   }, [loggedInUserEmail, product_id]);
 
   const detailUpdate = async () => {

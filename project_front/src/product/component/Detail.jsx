@@ -4,6 +4,7 @@ import axios from "axios";
 import React, { useCallback, useState, useEffect } from "react";
 import Table from "./Table";
 import Timer from "./Timer";
+// import Update from "./Update";
 
 const Detail = () => {
   const navigate = useNavigate();
@@ -145,6 +146,8 @@ const Detail = () => {
             </div>
             <div className="d-grid gap-2 d-md-flex justify-content-md-end">
               <button className="btn btn-warning" type="button">
+                {/* <Update /> */}
+                {/* 이게 Upadate.jsx 수정 버튼 */}
                 수정
               </button>
               {/* 여기 onClick하면 상품 구매하기 페이지로가야됨(준영님) 

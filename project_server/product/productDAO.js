@@ -39,6 +39,7 @@ const productDAO = {
   },
 
   //상품 정보 수정 : 글작성자 권한이 있는 사람만이 수정 가능
+  //글작성자 권한 여부가??
   update: async (item, callback) => {
     let conn = null;
     try {
