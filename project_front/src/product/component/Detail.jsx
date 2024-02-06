@@ -1,7 +1,7 @@
 //여기 페이지에서 입찰하기 클릭하면 bidding
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import React, { useCallback, useState, useEffect } from "react";
+import React, { useCallback, useState, useEffect, useContext } from "react";
 import Table from "./Table";
 import Timer from "./Timer";
 // import Update from "./Update";

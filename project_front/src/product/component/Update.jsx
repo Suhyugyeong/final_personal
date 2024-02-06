@@ -62,8 +62,14 @@ const Update = () => {
         onChange={changeData}
       />
       {/* 수정 버튼 클릭 시 detailUpdate 함수 호출 */}
-      <button onClick={detailUpdate}>수정</button>
+      {loggedInUserEmail ? <button onClick={detailUpdate}>수정</button> : ""}
     </div>
   );
 };
 export default Update;
+
+// {loggedInUserEmail === product.email ? (
+//   <button className="btn btn-warning" type="button">
+//   수정
+//   </button>
+// ) : ''} 은영님 피드백
