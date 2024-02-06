@@ -1,161 +1,103 @@
 import axios from "axios";
-import React, { useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
-//Bidding 페이지에서 입력받은 값을 Table에 전달해야 되는데..
+import PropTypes from "prop-types"; //prop-types install
 
-const Bidding = () => {
+const Bidding = (props) => {
+  console.log(props);
   const navigate = useNavigate();
-  const [product, setProduct] = useState({
-    title: "",
-    author: "",
-    isbn: "",
-    auction_price: "",
-    picture: "",
-    product_status: "",
-    createAt: "",
+  const { product_id } = props;
+  const { email } = props;
+
+  Bidding.propTypes = {
+    product_id: PropTypes.number.isRequired,
+    email: PropTypes.string.isRequired,
+  };
+
+  //입찰 데이터 상태
+  // const [data, setData] = useState({
+  //   email: email,
+  //   product_id: product_id,
+  //   isbn: "",
+  //   auctionPrice: 0,
+  //   quality: "",
+  //   additional: "",
+  // });
+  const [data, setData] = useState({
+    email: "happy@happy.happy",
+    product_id: 1,
+    isbn: "23541658",
+    auctionPrice: 0,
+    quality: "",
+    additional: "",
   });
-  const [title, setTitle] = useState("");
+
+  const changeData = useCallback((e) => {
+    setData((data) => ({ ...data, [e.target.name]: e.target.value }));
+  }, []);
+
+  // 업로드 파일 상태
+  const [fileName, setFileName] = useState("");
   const [file, setFile] = useState();
   const [uploadImage, setUploadImage] = useState();
+
+  // 최종 체크 상태
   const [isChecked, setIsChecked] = useState(false);
-  const [bidAmount, setBidAbmout] = useState(0);
 
-  const changeData = useCallback(
-    (e) => {
-      setProduct({ ...product, [e.target.name]: e.target.value });
-      // 여기서 e.target.name과 value로 상태 업데이트
-    },
-    [product]
-  );
+  // 응답받아온 정보 노출
+  const [bookTitle, setBookTitle] = useState("");
+  const [bookIsbn, setBookIsbn] = useState("");
+  const [bookPrice, setBookPrice] = useState("");
+  const [bookImg, setBookImg] = useState("");
 
-  const handleBidAmountChange = (e) => {
-    const amount = e.target.value;
-    setBidAbmout(amount);
-  }; //입찰가 업데이트
+  //입력 동기화
+  const [finalAuctionPrice, setFinalAuctionPrice] = useState("");
 
+  // 입찰하기 함수
   const insertBidding = async (e) => {
     e.preventDefault();
-    // if (!isChecked) {
-    //   alert("최종 입찰을 위해 반드시 체크박스를 선택해야 합니다.");
-    //   return;
-    // }
+    if (!isChecked) {
+      alert("최종 입찰을 위해 반드시 체크박스를 선택해야 합니다.");
+      return;
+    }
     if (file) {
+      //파일업로드는 항상 FormData 로 구성해서 서버에 전달해야..
       const formData = new FormData();
       formData.append("file1", file);
-      formData.append("title", title);
-      formData.append("bookInfo", product.isbn);
-      //여기가 api에서 받아온 정보이기 때문에...
-      formData.append("price", product.auction_price);
-      formData.append("status", product.product_status);
-      //여기서 상세내용을 추가하려면 DB에도 추가를 해야되나?
-
-      try {
-        const response = await axios.post(
-          "http://localhost:8000/products/upload", // 이미지 업로드를 처리하는 서버 엔드포인트
-          formData,
-          { headers: { "Content-Type": "multipart/form-data" } } //추가함...일단...
-        );
-
-        if (response.data.status === 200) {
-          // 서버에서 받은 이미지 경로 또는 식별자를 product 상태에 저장
-          setProduct({ ...product, picture: response.data.data });
-          setUploadImage(response.data.data);
-        } else {
-          console.error("이미지 업로드 실패");
-        }
-      } catch (error) {
-        console.error("에러발생", error);
-      }
-    } else {
-      alert("사진을 등록하지 않았습니다.");
-    }
-
-    const biddingData = {
-      title: product.title,
-      author: product.author,
-      isbn: product.isbn,
-      auction_price: product.auction_price,
-      picture: product.picture,
-      product_status: product.product_status,
-      createAt: product.createAt,
-    };
-
-    try {
-      const response = await axios.post(
-        "http://localhost:8000/products/bidding",
-        biddingData
-      );
-      //저장 성공하면
-      if (response.data.status === 200) {
-        navigate(`/detail/${response.data.data.product_id}`);
-      } else {
-        console.error("입찰 내용 저장 실패");
-      }
-    } catch (error) {
-      console.error("에러발생", error);
-    }
-  };
-  //asiox.post를 사용해서 /products/bidding 엔드포인트로 post요청을 보내는중
-  //biddingData 객체는 클라이언트에서 작성한 내용이 포함되어 있음
-
-  const upload = async (e) => {
-    e.preventDefault();
-    console.log(title, file);
-    if (file) {
-      const formData = new FormData();
-      formData.append("file1", file);
-      formData.append("title", title);
-      formData.append("bookInfo", product.isbn);
-      formData.append("price", product.auction_price);
-      formData.append("status", product.product_status);
-      const resp = await axios.post(
-        "http://localhost:8000/products/bidding",
-        // 여기를 어떻게 수정?
+      console.log("넘어가는 data 확인", data, file);
+      //FormData 로 json 을 넘기려면 문자열로 바꾸어서 넘겨야 한다.
+      const strData = JSON.stringify(data);
+      formData.append("sendData", strData);
+      //파일 업로드는 꼭 post 방식을 이용해야..
+      const res = await axios.post(
+        "http://localhost:8000/products/bidding/insert",
         formData
+        //여기에 '입찰 성공' alert 메뉴를 넣어야 하나??
       );
-      if (resp.data.status === 200) {
-        alert("upload ok");
-        setUploadImage(resp.data.data);
+      if (res.data.status === 200) {
+        console.log(res.data);
+        setBookTitle(res.data.data.title);
+        setBookIsbn(res.data.data.isbn);
+        setBookPrice(res.data.data.auction_price);
+        setBookImg(res.data.data.file_name);
+      } else {
+        console.error("입찰 실패");
       }
-    } else {
-      alert("데이터를 입력하지 않았습니다.");
     }
   };
 
   return (
     <div className="container-fluid py-5">
       <div className="container py-5">
-        <form action="/upload" method="post">
-          {/* 여기 전체 감싸는 곳에 action이랑 method 줌 */}
+        <form
+          id="form"
+          // method="post"
+          // action="/upload"
+          encType="multipart/form-data"
+        >
           <div className="row g-5">
             <div className="col-md-12 col-lg-6 col-xl-7">
               <div className="row">
-                <div className="col-md-12 col-lg-6">
-                  <div className="form-item w-100">
-                    <label className="form-label my-3">
-                      제목, 저자, ISBN<sup>*</sup>
-                    </label>
-                    <div className="input-group mb-3">
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="제목, 저자, ISBN"
-                        aria-label="Recipient's username"
-                        aria-describedby="button-addon2"
-                        onClick={changeData}
-                        // 여기서 api 가져오는게 필요해서...
-                      />
-                      <button
-                        className="btn btn-outline-secondary"
-                        type="button"
-                        id="button-addon2"
-                        onClick={changeData}
-                      >
-                        검색
-                      </button>
-                    </div>
-                  </div>
-                </div>
                 <div className="col-md-12 col-lg-6">
                   <div className="form-item w-100"></div>
                 </div>
@@ -169,13 +111,21 @@ const Bidding = () => {
                     type="text"
                     className="form-control"
                     aria-label="Dollar amount (with dot and two decimal places)"
-                    onChange={handleBidAmountChange}
+                    name="auctionPrice"
+                    id="auctionPrice"
+                    required
+                    defaultValue={data.auctionPrice} //0202 defaultValue로 수정 원래 value
                     // onChange={changeData}
+                    // onChange={(e) => {
+                    //   changeData(e);
+                    //   setFinalAuctionPrice(e.target.value);
+                    // }}
                   />
                   <span className="input-group-text">₩</span>
                   <span className="input-group-text">WON</span>
                 </div>
               </div>
+              <br />
               <div className="form-item">
                 <label className="form-label my-3">
                   품질등급 <sup>*</sup>
@@ -184,83 +134,96 @@ const Bidding = () => {
                 <select
                   className="form-select"
                   aria-label="Default select example"
+                  name="quality"
+                  id="quality"
+                  value={data.quality}
                   onChange={changeData}
+                  required
                 >
-                  <option>품질을 선택해주세요.</option>
+                  <option value="" disabled hidden>
+                    품질을 선택해주세요.
+                  </option>
                   <option value="1">상</option>
                   <option value="2">중</option>
                   <option value="3">하</option>
                 </select>
               </div>
-              <form
-                id="form"
-                // action="/upload"
-                //액션 업로드로 해줌
-                // method="post"
-                encType="multipart/form-data"
-              >
-                {/* 위에 같이 보내서 써도 되나? */}
-                <div className="form-item">
-                  <label className="form-label my-3">
-                    사진첨부<sup>*</sup>
-                  </label>
-                  <div className="mb-3">
-                    <input
-                      type="text"
-                      name="title"
-                      value={title}
-                      onChange={(e) => setTitle(e.target.value)}
-                    />
-                    <input
-                      type="file"
-                      name="file1"
-                      onChange={(e) => setFile(e.target.files[0])}
-                    />
-                    <input
-                      type="button"
-                      value="업로드"
-                      // onClick={upload}
-                      onClick={insertBidding}
-                    />
-                    {/* <input
-                      name="file1"
-                      // 여기 추가
-                      type="file"
-                      className="form-control"
-                      id="formFileMultiple"
-                      multiple
-                    />
-                    <label
-                      htmlFor="formFileMultiple"
-                      className="form-label"
-                    ></label> */}
-                  </div>
-                </div>
-              </form>
+
               <br />
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">상</th>
+                    <th scope="col">중</th>
+                    <th scope="col">하</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row"> 변색, 얼룩, 해짐</th>
+                    <td>없음</td>
+                    <td>있음</td>
+                    <td>있음</td>
+                  </tr>
+                  <tr>
+                    <th scope="row"> 낙서, 낙장, 찢어짐</th>
+                    <td>없음</td>
+                    <td>없음</td>
+                    <td>있음</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">사용감</th>
+                    <td>없음</td>
+                    <td>있음</td>
+                    <td>있음</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div className="form-item">
+                <label className="form-label my-3">
+                  사진첨부<sup>*</sup>
+                </label>
+
+                <div className="mb-3">
+                  <input
+                    type="text"
+                    name="fileName"
+                    defaultValue={fileName}
+                    onChange={(e) => setFileName(e.target.value)}
+                  />
+                  <input
+                    type="file"
+                    name="file1"
+                    onChange={(e) => setFile(e.target.files[0])}
+                  />
+                </div>
+                {/* <button onClick={upload}>업로드</button> */}
+              </div>
               {uploadImage ? (
                 <img src={`http://localhost:8000/upload/${uploadImage}`} />
               ) : (
                 ""
               )}
+              <br />
+
               <div className="form-item">
                 <label className="form-label my-3">
                   상세내용(선택사항)<sup></sup>
                 </label>
-                {/* 여기 체크 안 하면 경고 메시지 띄우고 싶음 */}
-                <div className="form-item">
-                  <textarea
-                    name="text"
-                    className="form-control"
-                    spellCheck="false"
-                    cols="30"
-                    rows="11"
-                    placeholder="제품 상세 내용"
-                    onChange={changeData}
-                  ></textarea>
-                </div>
+
+                <textarea
+                  className="form-control"
+                  spellCheck="false"
+                  cols="30"
+                  rows="11"
+                  placeholder="제품 상세 내용"
+                  name="additional"
+                  id="additional"
+                  value={data.additional}
+                  onChange={changeData}
+                ></textarea>
               </div>
-              <div className="form-check my-3"></div>
             </div>
             <div className="col-md-12 col-lg-6 col-xl-5">
               <div className="table-responsive">
@@ -268,7 +231,7 @@ const Bidding = () => {
                   <thead>
                     <tr>
                       <th scope="col"></th>
-                      <th scope="col">ISBN</th>
+                      <th scope="col">ISBN </th>
                       <th scope="col">제목</th>
                       <th scope="col"></th>
                       <th scope="col">저자</th>
@@ -278,27 +241,20 @@ const Bidding = () => {
                     <tr>
                       <td scope="row">
                         <div className="d-flex align-items-center mt-2">
-                          <img
-                            src="img/vegetable-item-2.jpg"
-                            className="img-fluid rounded-circle"
-                            alt=""
-                          />
+                          {bookImg ? (
+                            <img
+                              src={`http://localhost:8000/upload/${bookImg}`}
+                              style={{ width: "100px" }}
+                            />
+                          ) : (
+                            ""
+                          )}
                         </div>
                       </td>
-                      <td className="py-5">
-                        Awesome Brocoli(여기 api 결과가 들어갔음 좋겠음)
-                        {/* {uploadImage ? (
-                          <img
-                            src={`http://localhost:8000/upload/${uploadImage}`}
-                          />
-                        ) : (
-                          ""
-                        )} */}
-                      </td>
-                      <td className="py-5">$69.00</td>
+                      <td className="py-5">{bookIsbn}</td>
+                      <td className="py-5">{bookTitle}</td>
                       <td className="py-5"></td>
-                      <td className="py-5">2</td>
-                      {/* 이쪽 td는 전부 책 검색하고 나서 선택한 결과가 들어갔으면 좋겠음..되려나? */}
+                      <td className="py-5"></td>
                     </tr>
                     <tr>
                       <th scope="row"></th>
@@ -311,8 +267,10 @@ const Bidding = () => {
                       <td className="py-5"></td>
                       <td className="py-5">
                         <div className="py-3 border-bottom border-top">
-                          <p className="mb-0 text-dark">{bidAmount}</p>
-                          {/* 여기도 최종 입찰가를 작성하면 그 값이 여기로 들어갔으면 좋겠음 */}
+                          <p className="mb-0 text-dark">{bookPrice}</p>
+                          <p className="mb-0 text-dark">
+                            {finalAuctionPrice} 원
+                          </p>
                         </div>
                       </td>
                     </tr>
@@ -325,33 +283,31 @@ const Bidding = () => {
                     <input
                       type="checkbox"
                       className="form-check-input"
-                      id="Transfer-1"
-                      name="Transfer"
-                      value="Transfer"
+                      id="isChecked"
+                      name="isChecked"
+                      defaultValue={isChecked}
+                      // onChange={() => setIsChecked(!isChecked)}
                       onChange={(e) => setIsChecked(e.target.checked)}
                     />
-                    <label className="form-check-label" htmlFor="Transfer-1">
+                    <label className="form-check-label" htmlFor="isChecked">
                       최종 입찰하시겠습니까?
                     </label>
                   </div>
-                  {!isChecked && (
-                    <div className="alert alert-warning">
+                  {!isChecked ? (
+                    <div className="alert alert-danger">
                       최종 입찰을 위해 체크박스를 선택하세요.
                     </div>
+                  ) : (
+                    ""
                   )}
                   <p className="text-start text-dark">
-                    Make your payment directly into our bank account. Please use
-                    your Order ID as the payment reference. Your order will not
-                    be shipped until the funds have cleared in our account. Make
-                    your payment directly into our bank account. Please use your
-                    Order ID as the payment reference. Your order will not be
-                    shipped until the funds have cleared in our account. Make
-                    your payment directly into our bank account. Please use your
-                    Order ID as the payment reference. Your order will not be
-                    shipped until the funds have cleared in our account. Make
-                    your payment directly into our bank account. Please use your
-                    Order ID as the payment reference. Your order will not be
-                    shipped until the funds have cleared in our account.
+                    경매에 참여한 이후 취소가 불가능합니다. <br />
+                    본 경매는 언제든 구매자의 의사에 따라 중지될 수 있으며, 최종
+                    낙찰 없이 경매가 종료될 수 있습니다.
+                    <br />
+                    입찰 참여자가 고지한 내용과 다를시 경매 이후 환불이 이루어질
+                    수 있습니다.
+                    <br />
                   </p>
                 </div>
               </div>
@@ -361,17 +317,15 @@ const Bidding = () => {
                 <button
                   className="btn_3"
                   type="button"
-                  onClick={() => navigate(`/detail/${product.product_id}`)} //백택사용
+                  onClick={() => navigate(`/detail/${product_id}`)}
+                  //이게 왜 안 될까요??
                 >
                   취소하기
                 </button>
                 <button className="btn_3" type="button" onClick={insertBidding}>
                   입찰하기
                 </button>
-
-                {/* 낙찰페이지 불러오기 콘솔은 찍히는데... 변화가 없다... 
-                  서버로 데이터를 전송하고 페이지 이동하는데.. 
-                  서버측 문제??*/}
+                {/* 여기도 navigate 넣어서 detail화면으로 돌아가기?? 근데 onClick이 두 번이...?*/}
               </div>
             </div>
           </div>

@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
+import { UserProvider } from "./UserContext.jsx"; //추가 0202
 import "bootstrap/dist/css/bootstrap.min.css";
 //bootstrap template...........................
 import "./assets/css/bootstrap.min.css";
@@ -18,7 +19,10 @@ import "./index.css";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
-      <App />
+      <UserProvider>
+        {/* UserProvider 추가 0202 */}
+        <App />
+      </UserProvider>
     </BrowserRouter>
   </React.StrictMode>
 );
