@@ -1,12 +1,17 @@
 //여기 페이지에서 입찰하기 클릭하면 bidding
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import React, { useCallback, useState, useEffect } from "react";
 import Table from "./Table";
 import Timer from "./Timer";
-// import Update from "./Update";
+import React, { useCallback, useState, useEffect, useContext } from "react";
+import UserContext from "../../UserContext";
 
 const Detail = () => {
+  const context = useContext(UserContext);
+  const loggedInUserEmail = context.state.userData.email;
+  // console.log(context);
+  // alert(loggedInUserEmail);
+  // const loggedInUserEmail = "";
   const navigate = useNavigate();
   const { product_id } = useParams();
   const [product, setProduct] = useState({
@@ -145,13 +150,21 @@ const Detail = () => {
               <Table auctions={product.auctions} />
             </div>
             <div className="d-grid gap-2 d-md-flex justify-content-md-end">
-              <button className="btn btn-warning" type="button">
-                {/* <Update /> */}
-                {/* 이게 Upadate.jsx 수정 버튼 */}
-                수정
-              </button>
-              {/* 여기 onClick하면 상품 구매하기 페이지로가야됨(준영님) 
-                이 부분이 작성자 권한이 있을 때만 수정이 가능하게끔 해야함 */}
+              {/* {userEmail ? (
+                <button className="btn btn-warning" type="button">
+                  수정
+                </button>
+              ) : (
+                ""
+              )} */}
+              {loggedInUserEmail === product.email ? (
+                <button className="btn btn-warning" type="button">
+                  수정
+                </button>
+              ) : (
+                ""
+              )}
+              {/* 여기 onClick하면 update 페이지로가야됨(준영님 buy html 필요)  */}
             </div>
             <div className="col-lg-4 col-lx-4"></div>
             <div className="col-lg-4 col-lx-4"></div>

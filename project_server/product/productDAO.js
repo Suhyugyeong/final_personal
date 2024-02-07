@@ -5,7 +5,6 @@ const sql = {
   detail_auction: "select * from auction where product_id = ?",
   update:
     "update product set master_price =?, content = ? where product_id = ?",
-  //이부분은 buy에서 글쓴이가 수정하려면 쓸 부분
   insertAuction:
     "INSERT INTO auction (product_id, email, auction_price, picture, product_status) VALUES (?, ?, ?, ?, ?)",
   checkBookTitle: "SELECT title, isbn FROM product WHERE product_id = ?",
@@ -134,5 +133,5 @@ const productDAO = {
     }
   },
 };
-
+//
 module.exports = productDAO;

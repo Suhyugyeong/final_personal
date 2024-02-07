@@ -116,10 +116,10 @@ const Bidding = (props) => {
                     required
                     defaultValue={data.auctionPrice} //0202 defaultValue로 수정 원래 value
                     // onChange={changeData}
-                    // onChange={(e) => {
-                    //   changeData(e);
-                    //   setFinalAuctionPrice(e.target.value);
-                    // }}
+                    onChange={(e) => {
+                      changeData(e);
+                      setFinalAuctionPrice(e.target.value);
+                    }}
                   />
                   <span className="input-group-text">₩</span>
                   <span className="input-group-text">WON</span>

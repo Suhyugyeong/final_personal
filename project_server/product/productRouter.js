@@ -68,6 +68,6 @@ router.post("/update", function (req, res, next) {
   productDAO.update(data, (resp) => {
     res.json(resp);
   });
-}); //0202 추가
+}); //0202 추가 buy 페이지랑 연결을 해야됨
 
 module.exports = router;
