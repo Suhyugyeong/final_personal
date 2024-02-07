@@ -3,14 +3,15 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Table from "./Table";
 import Timer from "./Timer";
-// import Update from "./Update";
 import React, { useCallback, useState, useEffect, useContext } from "react";
 import UserContext from "../../UserContext";
 
 const Detail = () => {
   const context = useContext(UserContext);
-  // const loggedInUserEmail = context.state.userData.email;
-  const loggedInUserEmail = "";
+  const loggedInUserEmail = context.state.userData.email;
+  // console.log(context);
+  // alert(loggedInUserEmail);
+  // const loggedInUserEmail = "";
   const navigate = useNavigate();
   const { product_id } = useParams();
   const [product, setProduct] = useState({
@@ -163,8 +164,7 @@ const Detail = () => {
               ) : (
                 ""
               )}
-              {/* 여기 onClick하면 상품 구매하기 페이지로가야됨(준영님) 
-                이 부분이 작성자 권한이 있을 때만 수정이 가능하게끔 해야함 */}
+              {/* 여기 onClick하면 update 페이지로가야됨(준영님 buy html 필요)  */}
             </div>
             <div className="col-lg-4 col-lx-4"></div>
             <div className="col-lg-4 col-lx-4"></div>
