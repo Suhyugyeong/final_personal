@@ -80,8 +80,11 @@ const Detail = () => {
           <div className="row s_product_inner justify-content-between">
             <div className="col-lg-7 col-xl-7">
               <div className="product_slider_img">
-                <img src="/images/book_image1.jpg" alt="book image" />
-                {/* 여기서 api에서 받아온 사진이 올라갔으면 좋겠음.. */}
+                <img
+                  src={`http://localhost:8000/static/upload/${product.picture}`}
+                  style={{ width: "80px" }}
+                  alt="boookImage"
+                />
               </div>
             </div>
             <div className="col-lg-5 col-xl-4">
@@ -117,8 +120,8 @@ const Detail = () => {
                 <br />
                 <button
                   className="btn_3"
-                  onClick={() => navigate("/products/bidding")}
-                  // 여기 구매페이지는 없으니까... 어떻게 할지?
+                  onClick={() => navigate("/products/pay")}
+                  // 02047 일단 기본 pay 페이지로 넘어가게끔...
                 >
                   즉시구매가 {product.master_price} 원(₩)
                   <br />
