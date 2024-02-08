@@ -317,8 +317,7 @@ const Bidding = (props) => {
                 <button
                   className="btn_3"
                   type="button"
-                  onClick={() => navigate(`/products/detail/${product_id}`)}
-                  //undefined가 나옴.. 코드 추가해야할듯
+                  onClick={() => navigate("/products/list")}
                 >
                   취소하기
                 </button>
