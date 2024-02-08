@@ -11,7 +11,8 @@ const Bidding = (props) => {
 
   //userContext에서 정보 갖고 오기
   const userContext = useContext(UserContext);
-  const { email: loggedInUserEmail } = userContext;
+  // const { email: loggedInUserEmail } = userContext;
+  const loggedInUserEmail = userContext.state.userData.email;
 
   Bidding.propTypes = {
     product_id: PropTypes.number.isRequired,
@@ -38,6 +39,14 @@ const Bidding = (props) => {
   const changeData = useCallback((e) => {
     setData((data) => ({ ...data, [e.target.name]: e.target.value }));
   }, []);
+
+  // const changeData = useCallback((e)=>{
+  //   const {name, value} = e.target;
+  //   setData((prevData)=>({
+  //     ...prevData, [name]: value,
+  //   }))
+  //   setFinalAuctionPrice(value);
+  // }, [])
 
   // 업로드 파일 상태
   const [fileName, setFileName] = useState("");

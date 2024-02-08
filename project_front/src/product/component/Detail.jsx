@@ -114,13 +114,12 @@ const Detail = () => {
                 >
                   판매입찰하기
                 </button> */}
-
                 {loggedInUserEmail === product.email ? (
                   ""
                 ) : (
                   <button
                     className="btn_3"
-                    onClick={() => navigate("/products/bidding/")}
+                    onClick={() => navigate("/products/bidding/" + product_id)} //0208
                     disabled={countDownFinished}
                   >
                     판매입찰하기
@@ -164,6 +163,13 @@ const Detail = () => {
               <Table auctions={product.auctions} />
             </div>
             <div className="d-grid gap-2 d-md-flex justify-content-md-end">
+              {/* {userEmail ? (
+                <button className="btn btn-warning" type="button">
+                  수정
+                </button>
+              ) : (
+                ""
+              )} */}
               {loggedInUserEmail === product.email ? (
                 <button className="btn btn-warning" type="button">
                   수정

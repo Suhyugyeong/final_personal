@@ -57,7 +57,7 @@ const productDAO = {
     }
   },
 
-  bidding: async (data, callback) => {
+  bidding: async (data, filename, callback) => {
     let conn = null;
     try {
       console.log("1", data);
@@ -65,9 +65,9 @@ const productDAO = {
       const [result] = await conn.query(sql.insertAuction, [
         data.product_id,
         data.email,
-        data.auction_price,
-        data.picture,
-        data.product_status,
+        data.auctionPrice,
+        data.filename,
+        data.quality,
       ]);
       if (result) {
         const [bookInfo] = await conn.query(sql.checkBookTitle, [
@@ -133,5 +133,5 @@ const productDAO = {
     }
   },
 };
-//
+
 module.exports = productDAO;
