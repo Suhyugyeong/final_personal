@@ -15,22 +15,22 @@ const Bidding = (props) => {
   };
 
   //입찰 데이터 상태
-  // const [data, setData] = useState({
-  //   email: email,
-  //   product_id: product_id,
-  //   isbn: "",
-  //   auctionPrice: 0,
-  //   quality: "",
-  //   additional: "",
-  // });
   const [data, setData] = useState({
-    email: "happy@happy.happy",
-    product_id: 1,
-    isbn: "23541658",
+    email: email,
+    product_id: product_id,
+    isbn: "",
     auctionPrice: 0,
     quality: "",
     additional: "",
   });
+  // const [data, setData] = useState({
+  //   email: "happy@happy.happy",
+  //   product_id: 1,
+  //   isbn: "23541658",
+  //   auctionPrice: 0,
+  //   quality: "",
+  //   additional: "",
+  // });
 
   const changeData = useCallback((e) => {
     setData((data) => ({ ...data, [e.target.name]: e.target.value }));
@@ -317,8 +317,8 @@ const Bidding = (props) => {
                 <button
                   className="btn_3"
                   type="button"
-                  onClick={() => navigate(`/detail/${product_id}`)}
-                  //이게 왜 안 될까요??
+                  onClick={() => navigate(`/products/detail/${product_id}`)}
+                  //undefined가 나옴.. 코드 추가해야할듯
                 >
                   취소하기
                 </button>
