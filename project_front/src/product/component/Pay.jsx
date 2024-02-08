@@ -14,22 +14,10 @@ const Pay = () => {
             <div className="col-md-12 form-group"></div>
           </form>
         </div>
-        {/* <div className="cupon_area"> */}
-        {/* <div className="check_title">
-            <h2>
-              Have a coupon?
-              <a href="#">Click here to enter your code</a>
-            </h2>
-          </div> */}
-        {/* <input type="text" placeholder="Enter coupon code" />
-          <a className="tp_btn" href="#">
-            Apply Coupon
-          </a> */}
-        {/* </div> */}
         <div className="billing_details">
           <div className="row">
             <div className="col-lg-8">
-              <h3>배송지</h3>
+              <h3>배송정보</h3>
               <form
                 className="row contact_form"
                 action="#"
@@ -42,7 +30,7 @@ const Pay = () => {
                     className="form-control"
                     id="company"
                     name="company"
-                    placeholder="주문자"
+                    placeholder="주문자*"
                   />
                 </div>
 
@@ -52,7 +40,7 @@ const Pay = () => {
                     className="form-control"
                     id="company"
                     name="company"
-                    placeholder="받는 사람"
+                    placeholder="받는 사람*"
                   />
                 </div>
 
@@ -62,7 +50,7 @@ const Pay = () => {
                     className="form-control"
                     id="company"
                     name="company"
-                    placeholder="우편번호(-없이 입력해주세요.)"
+                    placeholder="우편번호(-없이 입력해주세요.)*"
                   />
                 </div>
 
@@ -72,7 +60,7 @@ const Pay = () => {
                     className="form-control"
                     id="company"
                     name="company"
-                    placeholder="배송지"
+                    placeholder="배송지*"
                   />
                 </div>
                 <div className="col-md-12 form-group">
@@ -81,7 +69,7 @@ const Pay = () => {
                     className="form-control"
                     id="company"
                     name="company"
-                    placeholder="상세주소"
+                    placeholder="상세주소*"
                   />
                 </div>
                 <div className="col-md-12 form-group">
@@ -90,7 +78,7 @@ const Pay = () => {
                     className="form-control"
                     id="company"
                     name="company"
-                    placeholder="휴대전화(-없이 입력해주세요.)"
+                    placeholder="휴대전화(-없이 입력해주세요.)*"
                   />
                 </div>
 
@@ -107,32 +95,32 @@ const Pay = () => {
                     name="message"
                     id="message"
                     rows="1"
-                    placeholder="Order Notes"
+                    placeholder="배송 메시지를 남겨주세요.(선택사항)"
                   ></textarea>
                 </div>
               </form>
             </div>
             <div className="col-lg-4">
               <div className="order_box">
-                <h2>Your Order</h2>
+                <h2>주문내역</h2>
 
                 <ul className="list list_2">
                   <li>
                     <a href="#">
                       상품금액
-                      <span>$2160.00</span>
+                      <span>40,000원</span>
                     </a>
                   </li>
                   <li>
                     <a href="#">
                       배송비
-                      <span>Flat rate: $50.00</span>
+                      <span>2,000원</span>
                     </a>
                   </li>
                   <li>
                     <a href="#">
                       최종결제금액
-                      <span>$2210.00</span>
+                      <span>42,000원</span>
                     </a>
                   </li>
                 </ul>
@@ -143,8 +131,8 @@ const Pay = () => {
                     <div className="check"></div>
                   </div>
                   <p>
-                    Please send a check to Store Name, Store Street, Store Town,
-                    Store State / County, Store Postcode.
+                    무통장 입금의 경우 24시간 내로 결제하지 않을 시, 자동으로
+                    주문이 취소됩니다.
                   </p>
                 </div>
                 <div className="payment_item active">
@@ -155,14 +143,14 @@ const Pay = () => {
                     <div className="check"></div>
                   </div>
                   <p>
-                    Please send a check to Store Name, Store Street, Store Town,
-                    Store State / County, Store Postcode.
+                    5만원 이상 구매시 국민, 롯데, 신한, 현대카드 무이자 할부
+                    가능(2024.02.01~2024.02.29)
                   </p>
                 </div>
                 <div className="creat_account">
                   <input type="checkbox" id="f-option4" name="selector" />
-                  <label htmlFor="f-option4">I’ve read and accept the </label>
-                  <a href="#">terms & conditions*</a>
+                  <label htmlFor="f-option4">이용약관에 동의합니다. </label>
+                  <a href="#">이용약관*</a>
                 </div>
                 <a className="btn_3" href="#">
                   결제하기
@@ -174,140 +162,6 @@ const Pay = () => {
       </div>
     </section>
   );
-  // (
-  //   <div
-  //     style={{
-  //       display: "flex",
-  //       justifyContent: "center",
-  //       alignItems: "center",
-  //       height: "100vh",
-  //       width: "100vw",
-  //     }}
-  //   >
-  //     {/* <div className="product_image_area section_padding"> */}
-  //     <div className="container">
-  //       {/* <div> */}
-  //       <form className="row g-3">
-  //         <div className="col-md-12">
-  //           <select
-  //             className="form-select"
-  //             aria-label="Default select example"
-  //             style={{ width: "800px" }}
-  //           >
-  //             <option selected>배송방법 선택</option>
-  //             <option value="1">택배</option>
-  //             <option value="2">우체국택배</option>
-  //             <option value="3">편의점 방문 픽업</option>
-  //           </select>
-  //         </div>
-
-  //         <div className="col-md-12 xl-6">
-  //           <label htmlFor="buyer" className="form-label">
-  //             주문인
-  //           </label>
-  //           <input
-  //             type="text"
-  //             className="form-control"
-  //             id="buyer"
-  //             style={{ width: "800px" }}
-  //           />
-  //         </div>
-  //         <div className="col-md-12">
-  //           <label htmlFor="buyer2" className="form-label">
-  //             받으시는 분
-  //           </label>
-  //           <input
-  //             type="text"
-  //             className="form-control"
-  //             id="buyer2"
-  //             style={{ width: "800px" }}
-  //           />
-  //         </div>
-  //         <div className="col-md-6">
-  //           <label htmlFor="postNumber" className="form-label">
-  //             우편번호(-없이 입력해주세요.)
-  //           </label>
-  //           <input
-  //             type="number"
-  //             className="form-control"
-  //             id="postNumber"
-  //             style={{ width: "800px" }}
-  //           />
-  //         </div>
-
-  //         <div className="col-12">
-  //           <label htmlFor="inputAddress" className="form-label">
-  //             주소
-  //           </label>
-  //           <input
-  //             type="text"
-  //             className="form-control"
-  //             id="inputAddress"
-  //             placeholder="예) 서소문로 89-31 "
-  //             style={{ width: "800px" }}
-  //           />
-  //         </div>
-  //         <div className="col-12">
-  //           <label htmlFor="inputAddress2" className="form-label">
-  //             상세주소
-  //           </label>
-  //           <input
-  //             type="text"
-  //             className="form-control"
-  //             id="inputAddress2"
-  //             placeholder="예) 1동 101호"
-  //             style={{ width: "800px" }}
-  //           />
-  //         </div>
-
-  //         <div className="col-md-12">
-  //           <label htmlFor="inputZip" className="form-label">
-  //             휴대전화번호(-없이 입력해주세요.)
-  //           </label>
-  //           <input
-  //             type="text"
-  //             className="form-control"
-  //             id="inputZip"
-  //             style={{ width: "800px" }}
-  //           />
-  //         </div>
-  //         <div></div>
-  //         <div></div>
-
-  //         {/* <div className="d-grid gap-2">
-  //               <button className="btn btn-secondary" type="button">
-  //                 취소하기
-  //               </button>
-  //               <button className="btn btn-primary" type="button">
-  //                 결제하기
-  //               </button>
-  //             </div> */}
-  //       </form>
-  //       {/* <div className="d-grid gap-2">
-  //             <button className="btn btn-secondary" type="button">
-  //               취소하기
-  //             </button>
-  //             <button className="btn btn-primary" type="button">
-  //               결제하기
-  //             </button>
-  //           </div> */}
-  //       <div
-  //         style={{
-  //           display: "flex",
-  //           justifyContent: "center",
-  //           alignItems: "center",
-  //           // height: "100vh",
-  //         }}
-  //       >
-  //         <button className="btn_3">취소하기</button>
-  //         &nbsp; &nbsp;
-  //         <button className="btn_3">결제하기</button>
-  //       </div>
-  //     </div>
-  //     {/* </div> */}
-  //   </div>
-  //   // </div>
-  // );
 };
 
 export default Pay;
