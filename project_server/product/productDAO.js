@@ -5,6 +5,7 @@ const sql = {
   detail_auction: "select * from auction where product_id = ?",
   update:
     "update product set master_price =?, content = ? where product_id = ?",
+  //SET 새로운 값 설정
   insertAuction:
     "INSERT INTO auction (product_id, email, auction_price, picture, product_status) VALUES (?, ?, ?, ?, ?)",
   checkBookTitle: "SELECT title, isbn FROM product WHERE product_id = ?",
@@ -36,9 +37,6 @@ const productDAO = {
       if (conn !== null) conn.release();
     }
   },
-
-  //상품 정보 수정 : 글작성자 권한이 있는 사람만이 수정 가능
-  //글 작성자 정보를 먼저 가져와야??
 
   update: async (item, callback) => {
     let conn = null;
