@@ -1,21 +1,18 @@
 import axios from "axios";
 import { useCallback, useState, useContext } from "react";
-import { useNavigate, useParams } from "react-router-dom"; //0208
+import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types"; //prop-types install
 import UserContext from "../../UserContext";
 
-const Bidding = () => {
-  //괄호 내부 props 지웠고
-  // console.log(`props:${props}`); //0208
+const Bidding = (props) => {
+  console.log(props);
   const navigate = useNavigate();
-  // const { product_id } = props;
-  const { product_id } = useParams(); //0208
+  const { product_id } = props;
 
   //userContext에서 정보 갖고 오기
   const userContext = useContext(UserContext);
-
   // const { email: loggedInUserEmail } = userContext;
-  // const loggedInUserEmail = userContext.state.userData.email;
+  const loggedInUserEmail = userContext.state.userData.email;
 
   Bidding.propTypes = {
     product_id: PropTypes.number.isRequired,
@@ -23,7 +20,7 @@ const Bidding = () => {
 
   //입찰 데이터 상태
   const [data, setData] = useState({
-    email: userContext.state.userData.email,
+    email: loggedInUserEmail,
     product_id: product_id,
     isbn: "",
     auctionPrice: 0,
@@ -42,6 +39,14 @@ const Bidding = () => {
   const changeData = useCallback((e) => {
     setData((data) => ({ ...data, [e.target.name]: e.target.value }));
   }, []);
+
+  // const changeData = useCallback((e)=>{
+  //   const {name, value} = e.target;
+  //   setData((prevData)=>({
+  //     ...prevData, [name]: value,
+  //   }))
+  //   setFinalAuctionPrice(value);
+  // }, [])
 
   // 업로드 파일 상태
   const [fileName, setFileName] = useState("");
