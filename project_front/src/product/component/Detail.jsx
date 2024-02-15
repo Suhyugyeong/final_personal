@@ -5,6 +5,7 @@ import Table from "./Table";
 import Timer from "./Timer";
 import React, { useCallback, useState, useEffect, useContext } from "react";
 import UserContext from "../../UserContext";
+import Update from "./Update";
 
 const Detail = () => {
   const context = useContext(UserContext);
@@ -73,6 +74,18 @@ const Detail = () => {
     fetchData();
   }, [product_id]);
 
+  //수정 버튼이 클릭, 호출되는 함수..
+  const goUpdate = () => {
+    //update 로 가면서 데이터 넘겨야 한다. 데이터는 이미 detail 에 모두 있기 때문에..
+    //detail 의 데이터를 그대로 전달해 주면 된다.
+    navigate("/products/update", {
+      state: {
+        productId: product_id,
+        productData: product,
+      },
+    });
+  };
+
   return (
     <div>
       <div className="product_image_area section_padding">
@@ -128,14 +141,29 @@ const Detail = () => {
 
                 <br />
                 <br />
-                <button
+                {/* <button
                   className="btn_3"
                   onClick={() => navigate("/products/pay")}
                   // 02047 일단 기본 pay 페이지로 넘어가게끔...
                 >
                   즉시구매가 {product.master_price} 원(₩)
                   <br />
-                </button>
+                </button> */}
+                {loggedInUserEmail === product.email ? (
+                  <button
+                    className="btn_3"
+                    onClick={() => navigate("/products/pay")}
+                  >
+                    즉시구매가 {product.master_price} 원(₩)
+                    <br />
+                  </button>
+                ) : (
+                  <button className="btn_3" disabled>
+                    즉시구매가 {product.master_price} 원(₩)
+                    <br />
+                  </button>
+                )}
+                {/* 즉시구매는 글 작성자만 클릭할 수 있게 해두었음.. */}
               </div>
             </div>
           </div>
@@ -148,6 +176,29 @@ const Detail = () => {
           <br />
           <br />
           <br />
+          {loggedInUserEmail === product.email ? (
+            <div className="d-grid gap-2 col-3 mx-auto">
+              <button
+                id="editButton"
+                className="btn btn-outline-secondary"
+                type="button"
+                onClick={goUpdate}
+              >
+                게시글 수정
+              </button>
+            </div>
+          ) : (
+            ""
+          )}
+          {/* 
+          <div className="d-grid gap-2 col-3 mx-auto">
+            <button className="btn btn-secondary" type="button">
+              수정
+            </button>
+            <button className="btn btn-primary" type="button">
+              Button
+            </button>
+          </div> */}
         </p>
       </div>
 
@@ -170,14 +221,17 @@ const Detail = () => {
               ) : (
                 ""
               )} */}
-              {loggedInUserEmail === product.email ? (
-                <button className="btn btn-warning" type="button">
+              {/* {loggedInUserEmail === product.email ? (
+                <button
+                  className="btn btn-warning"
+                  type="button"
+                  onClick={goUpdate}
+                >
                   수정
                 </button>
               ) : (
                 ""
-              )}
-              {/* 여기 onClick하면 update 페이지로가야됨(준영님 buy html 필요)  */}
+              )} */}
             </div>
             <div className="col-lg-4 col-lx-4"></div>
             <div className="col-lg-4 col-lx-4"></div>

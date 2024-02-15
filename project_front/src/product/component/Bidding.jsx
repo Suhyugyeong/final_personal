@@ -79,7 +79,8 @@ const Bidding = () => {
       const res = await axios.post(
         "http://localhost:8000/products/bidding/insert",
         formData
-        //여기에 '입찰 성공' alert 메뉴를 넣어야 하나??
+
+        //여기에 '입찰 성공' alert 메뉴를 넣어야 하나??    navigate("/products/list")추가 하면 될 것 같고
       );
       if (res.data.status === 200) {
         console.log(res.data);

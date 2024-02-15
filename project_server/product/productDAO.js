@@ -38,17 +38,18 @@ const productDAO = {
     }
   },
 
-  update: async (item, callback) => {
+  update: async (id, item, callback) => {
     let conn = null;
     try {
       conn = await getPool().getConnection();
       const [resp] = await conn.query(sql.update, [
         item.master_price,
         item.content,
-        item.product_id,
+        id,
       ]);
       callback({ status: 200, message: "ok" });
     } catch (error) {
+      console.log("dao error", error);
       return { status: 500, message: "게시글 수정 실패", error: error };
     } finally {
       if (conn !== null) conn.release();

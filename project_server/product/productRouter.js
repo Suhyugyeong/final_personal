@@ -1,3 +1,4 @@
+//폼데이터랑 사진까지 잘 전송되도록 수정함
 const express = require("express");
 const productDAO = require("./productDAO");
 const multer = require("multer");
@@ -18,32 +19,30 @@ const upload = multer({
   limits: { fileSize: 5 * 1024 * 1024 },
 });
 
-router.post("/bidding/insert", async (req, res, next) => {
-  console.log("0000000");
-
-  //파일 업로드 처리하고.. 이 라인에서 에러가 발생하지 않으면 파일 업로드 성공
-  const a1 = upload.single("file1"); //여기서 사진 전송
-
-  a1(req, res, function (err) {
-    if (err instanceof multer.MulterError) {
-      console.log(err);
-      res.json({ status: 500, message: "error" });
-    } else if (err) {
-      console.log(err);
-      res.json({ status: 500, message: "error" });
-    } else {
-      //에러가 없다면.. 나머지 데이터를 받는다..
-      console.log("upload router....");
-      const data = req.body; //클라이언트에서 서버로 전송된 HTTP 요청의 본문(body), 이게 폼 데이터
+router.post(
+  "/bidding/insert",
+  upload.single("file1"),
+  //이 부분 빼먹지 말고
+  async (req, res, next) => {
+    try {
+      // 파일 업로드 성공 여부 확인
+      if (!req.file) {
+        return res.json({ status: 500, message: "파일 업로드 실패" });
+      }
+      const data = req.body;
       const obj = JSON.parse(data.sendData);
-
-      console.log("sendData", obj);
-      productDAO.bidding(obj, (resp) => {
+      const filename = req.file.filename;
+      const biddingData = { ...data, ...obj, filename };
+      //스프레드 연산자 사용해서 객체의 속성을 biddingData에 넣기~!
+      productDAO.bidding(biddingData, (resp) => {
         res.json(resp);
       });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ status: 500, message: "서버 에러" });
     }
-  });
-});
+  }
+);
 
 router.get("/detail/:id", function (req, res, next) {
   console.log("디테일 불러오기");
@@ -62,10 +61,11 @@ router.get("/timer/:id", function (req, res, next) {
   });
 });
 
-router.post("/update", function (req, res, next) {
-  const data = req.body;
-  console.log("게시글 수정하기");
-  productDAO.update(data, (resp) => {
+router.post("/update/:id", function (req, res, next) {
+  const productId = req.params.id;
+  const data = req.body.product;
+  console.log("게시글 수정하기", data);
+  productDAO.update(productId, data, (resp) => {
     res.json(resp);
   });
 }); //0202 추가 buy 페이지랑 연결을 해야됨
